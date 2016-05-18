@@ -6,8 +6,8 @@ public class Solution {
         int mark = -1;
         while (i < s.length()) {
             if (j < p.length() && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
-                ++i;
-                ++j;
+                i++;
+                j++;
             } else if (j < p.length() && p.charAt(j) == '*') {
                 star = j;
                 j++;
@@ -15,7 +15,7 @@ public class Solution {
                 //这一步是关键，匹配s中当前字符与p中‘＊’后面的字符，如果匹配，则在第一个if中处理，如果不匹配，则继续比较s中的下一个字符。
             } else if (star != -1) {
                 j = star + 1;
-                i = ++mark;
+                i = mark++;
             } else {
                 return false;
             }
