@@ -22,7 +22,7 @@ public class Solution {
         }
         //最后在此处处理多余的‘＊’，因为多个‘＊’和一个‘＊’意义相同。
         while (j < p.length() && p.charAt(j) == '*') {
-            ++j;
+            j++;
         }
         return j == p.length();
     }
