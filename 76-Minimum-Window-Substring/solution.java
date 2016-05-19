@@ -34,24 +34,21 @@ public class Solution {
             while (count == t.length()) {
                 char c = s.charAt(curL);
                 Integer n = target.get(c);
-                if (n == null) {
-                    curL++;
-                    continue;
-                }
-                Integer f = found.getOrDefault(c, 0);
-                if (f > n) {
-                    curL++;
-                    found.put(c, f - 1);
-                } else {
-                    String str = s.substring(curL, curR);
-                    if (str.length() < curLen) {
-                        curLen = str.length();
-                        result = str;
+                if (n != null) {
+                    Integer f = found.getOrDefault(c, 0);
+                    if (f > n) {
+                        
+                    } else {
+                        String str = s.substring(curL, curR);
+                        if (str.length() < curLen) {
+                            curLen = str.length();
+                            result = str;
+                        }
+                        count--;
                     }
                     found.put(c, f - 1);
-                    curL++;
-                    count--;
                 }
+                curL++;
             }
         }
         
