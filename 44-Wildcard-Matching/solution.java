@@ -14,7 +14,7 @@ public class Solution {
             }// 2. case 2: we are currently at a '*'
             else if (p < pattern.length() && pattern.charAt(p) == '*' ){
                 starIdx = p;
-                p++;
+                p = starIdx + 1;
                 match = s;
             } // 3. case 3: they do not match, we do not currently at a *, but the last matched is a *
             else if (starIdx != -1){
