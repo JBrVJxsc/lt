@@ -5,7 +5,7 @@ public class Solution {
         }
         
         List<List<Integer>> lists = new ArrayList<>();
-        Set<List<Integer>> set = new HashSet<>();
+        // Set<List<Integer>> set = new HashSet<>();
         Arrays.sort(nums);
         
         for (int i : nums) {
@@ -13,15 +13,17 @@ public class Solution {
             for (List<Integer> list : lists) {
                 List<Integer> l = new ArrayList<>(list);
                 l.add(i);
-                if (!set.contains(l)) {
-                    temp.add(l);
-                }
+                // if (!set.contains(l)) {
+                    
+                // }
+                temp.add(l);
             }
             List<Integer> l = new ArrayList<>();
             l.add(i);
-            if (!set.contains(l)) {
-                temp.add(l);
-            }
+            // if (!set.contains(l)) {
+                
+            // }
+            temp.add(l);
             lists.addAll(temp);
         }
         
