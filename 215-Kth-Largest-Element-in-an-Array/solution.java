@@ -5,7 +5,7 @@ public class Solution {
             pq.add(i);
             if (pq.size() > k) {
                 pq.remove();
-            }            
+            }
         }
         return pq.remove();
     }
