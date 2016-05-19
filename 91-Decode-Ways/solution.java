@@ -1,29 +1,33 @@
 public class Solution {
     public int numDecodings(String s) {
-        if (s == null || s.length() == 0) {
+        if (s == null) {
+            throw new IllegalArgumentException("s cannot be null.");
+        }
+        
+        if (s.length() == 0) {
             return 0;
         }
-        int[] map = new int[s.length()];
+        
+        int[] dp = new int[s.length()];
         for (int i = s.length() - 1; 0 <= i; i--) {
-            char c = s.charAt(i);
-            if (c == '0') {
+            if (s.charAt(i) == '0') {
                 continue;
             }
-            
+            // dp[i] = dp[i + 1] + dp[i + 2].
             if (i == s.length() - 1) {
-                map[i] = 1;
-            } else if (i == s.length() - 2) {
-                map[i] += map[i + 1];
-                if (c == '1' || c == '2' && s.charAt(i + 1) < '7') {
-                    map[i] += 1;
-                }
+                dp[i] = 1;
             } else {
-                map[i] += map[i + 1];
-                if (c == '1' || c == '2' && s.charAt(i + 1) < '7') {
-                    map[i] += map[i + 2];
-                }                
+                dp[i] += dp[i + 1];
+                if (s.charAt(i) == '1' || s.charAt(i) == '2' && s.charAt(i + 1) < '7') {
+                    if (i == s.length() - 2) {
+                        dp[i] += 1;
+                    } else {
+                        dp[i] += dp[i + 2];                 
+                    }                    
+                }
             }
         }
-        return map[0];
+        
+        return dp[0];
     }
 }
