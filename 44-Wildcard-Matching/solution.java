@@ -1,29 +1,35 @@
 public class Solution {
-    public boolean isMatch(String s, String p) {
-        int i = 0;
-        int j = 0;
-        int star = -1;
-        int mark = -1;
-        while (i < s.length()) {
-            if (j < p.length() && (p.charAt(j) == '?' || p.charAt(j) == s.charAt(i))) {
-                i++;
-                j++;
-            } else if (j < p.length() && p.charAt(j) == '*') {
-                star = j;
-                j++;
-                mark = i;
-                //这一步是关键，匹配s中当前字符与p中‘＊’后面的字符，如果匹配，则在第一个if中处理，如果不匹配，则继续比较s中的下一个字符。
-            } else if (star != -1) {
-                j = star + 1;
-                i = mark++;
-            } else {
+    public boolean isMatch(String str, String pattern) {
+        int s = 0; // cursor for traversal in str.
+        int p = 0; // cursor for traversal in pattern.
+        int starIdx = -1; // once we found a star, we want to record the place of the star.
+        int match = 0; // once we found a star, we want to start to match the rest of pattern with str, starting from match; this is for remembering the place where we need to start.
+         
+        // we check and match every char for str.
+        while (s < str.length()){
+            // 1. case 1: we are not currently at any *, 
+            if (p < pattern.length() && (pattern.charAt(p) == str.charAt(s) || pattern.charAt(p) == '?')){
+                p++;
+                s++;
+            }// 2. case 2: we are currently at a '*'
+            else if (p < pattern.length() && pattern.charAt(p) == '*' ){
+                starIdx = p;
+                p++;
+                match = s;
+            } // 3. case 3: they do not match, we do not currently at a *, but the last matched is a *
+            else if (starIdx != -1){
+                match++;
+                s = match;
+                p = starIdx + 1;
+            } // 4. case 4: they do not match, do not currently at a *, and last matched is not a *, then the answer is false;
+            else{
                 return false;
             }
         }
-        //最后在此处处理多余的‘＊’，因为多个‘＊’和一个‘＊’意义相同。
-        while (j < p.length() && p.charAt(j) == '*') {
-            j++;
-        }
-        return j == p.length();
+        // when we finish matching all characters in str, is pattern also finished? we could only allow '*' at the rest of pattern
+        while (p < pattern.length() && pattern.charAt(p) == '*')
+        p++;
+   
+        return p == pattern.length();
     }
 }
