@@ -36,15 +36,13 @@ public class Solution {
                 Integer n = target.get(c);
                 if (n != null) {
                     Integer f = found.getOrDefault(c, 0);
-                    if (f > n) {
-                        
-                    } else {
+                    if (f <= n) {
                         String str = s.substring(curL, curR);
                         if (str.length() < curLen) {
                             curLen = str.length();
                             result = str;
                         }
-                        count--;
+                        count--;                        
                     }
                     found.put(c, f - 1);
                 }
