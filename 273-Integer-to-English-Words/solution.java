@@ -11,22 +11,22 @@ public class Solution {
         return helper(num);
     }
     
-    private String helper(int num) {
+    private String helper(int n) {
         String str = "";
-        if (num < 10) {
-            str = belowTen[num];
-        } else if (num < 20) {
-            str = belowTwenty[num - 10];
-        } else if (num < 100) {
-            str = belowHundred[num / 10] + " " + helper(num % 10);
-        } else if (num < 1000) {
-            str = helper(num / 100) + " Hundred " + helper(num % 100);
-        } else if (num < 1000000) {
-            str = helper(num / 1000) + " Thousand " + helper(num % 1000);
-        } else if (num < 1000000000) {
-            str = helper(num / 1000000) + " Million " + helper(num % 1000000);
+        if (n < 10) {
+            str = belowTen[n];
+        } else if (n < 20) {
+            str = belowTwenty[n - 10];
+        } else if (n < 100) {
+            str = belowHundred[n / 10] + " " + helper(n % 10);
+        } else if (n < 1000) {
+            str = helper(n / 100) + " Hundred " + helper(n % 100);
+        } else if (n < 1000000) {
+            str = helper(n / 1000) + " Thousand " + helper(n % 1000);
+        } else if (n < 1000000000) {
+            str = helper(n / 1000000) + " Million " + helper(n % 1000000);
         } else {
-            str = helper(num / 1000000000) + " Billion " + helper(num % 1000000000);
+            str = helper(n / 1000000000) + " Billion " + helper(n % 1000000000);
         }
         return str.trim();
     }
