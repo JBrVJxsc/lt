@@ -4,7 +4,6 @@ public class Solution {
         int j = 0;
         int star = -1;
         int match = 0;
-        
         while (i < s.length()) {
             if (j < p.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?')) {
                 i++;
@@ -14,9 +13,9 @@ public class Solution {
                 star = j;
                 j++;
             } else if (star != -1) {
-                j = star + 1;
                 match++;
                 i = match;
+                j = star + 1;
             } else {
                 return false;
             }
