@@ -9,9 +9,9 @@ public class Solution {
                 i++;
                 j++;
             } else if (j < p.length() && p.charAt(j) == '*') {
-                match = i;
                 star = j;
                 j++;
+                match = i;
             } else if (star != -1) {
                 match++;
                 i = match;
