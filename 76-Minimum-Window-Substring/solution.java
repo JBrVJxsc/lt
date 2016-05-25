@@ -18,7 +18,7 @@ public class Solution {
         String result = "";
         
         while (curR < s.length()) {
-            while (curR < s.length() && count != t.length()) {
+            while (curR < s.length() && count < t.length()) {
                 char c = s.charAt(curR);
                 Integer n = target.get(c);
                 if (n != null) {
