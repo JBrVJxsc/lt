@@ -1,31 +1,36 @@
 public class Solution {
-    
-    private boolean[] visited = null;
-    private boolean[] dp = null;
-    
-    public boolean wordBreak(String s, Set<String> wordDict) {
-        visited = new boolean[s.length()];
-        dp = new boolean[s.length()];
-        return dfs(s, wordDict, 0);
+  private boolean[] visited = null;
+  private boolean[] result = null;
+
+  public boolean wordBreak(String s, Set<String> wordDict) {
+    visited = new boolean[s.length()];
+    result = new boolean[s.length()];         
+    return dfs(s, wordDict, 0);
+  }
+
+  private boolean dfs(String s, Set<String> wordDict, int i) {
+    if (i >= s.length()) {
+      return true;
     }
     
-    private boolean dfs(String s, Set<String> wordDict, int start) {
-        if (start >= s.length()) {
-            return true;
-        }
-        if (visited[start]) {
-            return dp[start];
-        }
-        visited[start] = true;
-        for (int i = start + 1; i <= s.length(); i++) {
-            String str = s.substring(start, i);
-            if (wordDict.contains(str)) {
-                dp[start] = dfs(s, wordDict, i);
-                if (dp[start]) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    if (visited[i]) {
+      return result[i];
     }
+    
+    visited[i] = true;
+    
+    for (int j = i + 1; j <= s.length(); j++) {
+      String sub = s.substring(i, j);
+      if (!wordDict.contains(sub)) {
+        continue;
+      }
+      boolean b = dfs(s, wordDict, j);
+      if (b) {
+        result[i] = true;
+        break;
+      }
+    }
+    
+    return result[i];
+  }
 }
