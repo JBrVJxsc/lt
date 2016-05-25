@@ -1,33 +1,33 @@
 public class Solution {
-    public List<List<Integer>> subsets(int[] nums) {
-        if (nums == null) {
-            throw new IllegalArgumentException("nums cannot be null.");
-        }
-        
-        List<List<Integer>> lists = new ArrayList<>();
-        Set<List<Integer>> set = new HashSet<>();
-        Arrays.sort(nums);
-        
-        for (int i : nums) {
-            List<List<Integer>> temp = new ArrayList<>();
-            for (List<Integer> list : lists) {
-                List<Integer> l = new ArrayList<>(list);
-                l.add(i);
-                if (!set.contains(l)) {
-                    temp.add(l);
-                    set.add(l);
-                }
-            }
-            List<Integer> l = new ArrayList<>();
-            l.add(i);
-            if (!set.contains(l)) {
-                temp.add(l);
-                set.add(l);
-            }
-            lists.addAll(temp);
-        }
-        
-        lists.add(new ArrayList<>());
-        return lists;
+
+public List<List<Integer>> subsets(int[] nums) {
+  if (nums == null) {
+    throw new IllegalArgumentException("nums cannot be null.");
+  }
+  
+  List<List<Integer>> lists = new ArrayList<>();
+  if (nums.length == 0) {
+    return lists;
+  }
+  
+  Arrays.sort(nums);
+  
+  for (int i : nums) {
+    List<List<Integer>> copy = new ArrayList<>();
+    for (List<Integer> list : lists) {
+      List<Integer> l = new ArrayList<>(list);
+      l.add(i);
+      copy.add(l);
     }
+    
+    List<Integer> l = new ArrayList<>();
+    l.add(i);
+    copy.add(l);
+    
+    lists.addAll(copy);
+  }
+  
+  lists.add(new ArrayList<>());
+  return lists;
+}
 }
