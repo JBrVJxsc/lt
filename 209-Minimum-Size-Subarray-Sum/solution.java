@@ -14,7 +14,7 @@ public class Solution {
         break;
       }
       
-      while (l < nums.length && sum >= s) {
+      while (sum >= s) {
         sum -= nums[l++];
         if (sum < s) {
           int newLen = r - l + 1;
