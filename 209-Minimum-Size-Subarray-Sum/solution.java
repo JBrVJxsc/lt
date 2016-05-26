@@ -2,8 +2,8 @@ public class Solution {
   public int minSubArrayLen(int s, int[] nums) {
     int l = 0;
     int r = 0;
-    int min = 0;
     int sum = 0;
+    int len = 0;
 
     while (r < nums.length) {
       while (r < nums.length && sum < s) {
@@ -11,22 +11,22 @@ public class Solution {
       }
       
       if (sum < s) {
-          break;
+        break;
       }
       
-      while (sum >= s) {
+      while (l < nums.length && sum >= s) {
         sum -= nums[l++];
         if (sum < s) {
-            if (min == 0) {
-                min = r - l + 1;
-            }
-            else {
-                min = Math.min(min, r - l + 1);
-            }
+          int newLen = r - l + 1;
+          if (len == 0) {
+            len = newLen;
+          } else {
+            len = Math.min(len, newLen);
+          }
         }
       }
     }
     
-    return min;
+    return len;
   }
 }
