@@ -17,32 +17,6 @@ public class Solution {
   }
 
   private void build(Map<Character, Set<Character>> in, Map<Character, Set<Character>> out, String[] words, int start, int end, int index) {
-//     while (start < words.length && index == words[start].length()) {
-//       start++;
-//     }
-//     if (start >= end) {
-//       return;
-//     }
-    
-//     char curChar = words[start].charAt(index);
-//     int curLen = 1;
-//     int curIndex = start;
-//     for (int i = start + 1; i <= end; i++) {
-//       char c = words[i].charAt(index);
-//       if (c != curChar) {
-//         addEdge(in, out, curChar, c);
-//         build(in, out, words, curIndex, curIndex + curLen - 1, index + 1);
-//         curChar = c;
-//         curLen = 1;
-//         curIndex = i;
-//       } else {
-//         curLen++;
-//       }
-//     }
-//     build(in, out, words, curIndex, curIndex + curLen - 1, index + 1);
-    // while (start < words.length && index == words[start].length()) {
-    //   start++;
-    // }
     if (start >= end) {
       return;
     }
