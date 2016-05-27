@@ -1,6 +1,6 @@
 class TrieNode {
   
-  boolean isEnd = false;
+  boolean isWord = false;
   TrieNode[] nodes = new TrieNode[26];
   
   // Initialize your data structure here.
@@ -26,7 +26,22 @@ public class Trie {
       }
       node = node.nodes[pos];
     }
-    node.isEnd = true;
+    node.isWord = true;
+  }
+
+  // Returns if the word is in the trie.
+  public boolean search(String word) {
+    TrieNode node = find(word);
+    if (node == null) {
+      return false;
+    }
+    return node.isWord;
+  }
+
+  // Returns if there is any word in the trie
+  // that starts with the given prefix.
+  public boolean startsWith(String word) {
+    return find(word) != null;
   }
   
   private TrieNode find(String word) {
@@ -38,22 +53,7 @@ public class Trie {
       }
       node = node.nodes[pos];
     }
-    return node;   
-  }
-
-  // Returns if the word is in the trie.
-  public boolean search(String word) {
-    TrieNode node = find(word);
-    if (node == null) {
-      return false;
-    }
-    return node.isEnd;
-  }
-
-  // Returns if there is any word in the trie
-  // that starts with the given prefix.
-  public boolean startsWith(String prefix) {
-    return find(prefix) != null;
+    return node;    
   }
 }
 
