@@ -23,28 +23,29 @@ public class WordDictionary {
   // Returns if the word is in the data structure. A word could
   // contain the dot character '.' to represent any one letter.
   public boolean search(String word) {
-    return search(word, root, 0);
+    return dfs(word, 0, root);
   }
   
-  private boolean search(String word, Node node, int index) {
+  private boolean dfs(String word, int index, Node node) {
+    if (node == null) {
+      return false;
+    }
     if (index == word.length()) {
       return node.isWord;
     }
-    if (word.charAt(index) == '.') {
-      for (int i = 0; i < 26; i++) {
-        if (node.nodes[i] != null) {
-          if (search(word, node.nodes[i], index + 1)) {
-            return true;
-          }
+    char c = word.charAt(index);
+    if (c == '.') {
+      for (Node n : node.nodes) {
+        if (dfs(word, index + 1, n)) {
+          return true;
         }
       }
       return false;
     } else {
-      int pos = word.charAt(index) - 'a';
-      if (node.nodes[pos] == null) {
+      if (node.nodes[c - 'a'] == null) {
         return false;
       }
-      return search(word, node.nodes[pos], index + 1);
+      return dfs(word, index + 1, node.nodes[c - 'a']);
     }
   }
 }
@@ -53,3 +54,4 @@ public class WordDictionary {
 // WordDictionary wordDictionary = new WordDictionary();
 // wordDictionary.addWord("word");
 // wordDictionary.search("pattern");
+
