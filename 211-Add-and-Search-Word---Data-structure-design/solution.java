@@ -29,7 +29,7 @@ public class WordDictionary {
   private boolean dfs(String word, int index, Node node) {
     if (node == null) {
       return false;
-    }
+    }          
     if (index == word.length()) {
       return node.isWord;
     }
