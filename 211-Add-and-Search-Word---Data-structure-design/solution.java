@@ -26,25 +26,25 @@ public class WordDictionary {
     return search(word, root, 0);
   }
   
-  private boolean search(String word, Node node, int i) {
-    if (i == word.length()) {
+  private boolean search(String word, Node node, int index) {
+    if (index == word.length()) {
       return node.isWord;
     }
-    if (word.charAt(i) == '.') {
-      for (int j = 0; j < 26; j++) {
-        if (node.nodes[j] != null) {
-          if (search(word, node.nodes[j], i + 1)) {
+    if (word.charAt(index) == '.') {
+      for (int i = 0; i < 26; i++) {
+        if (node.nodes[i] != null) {
+          if (search(word, node.nodes[i], index + 1)) {
             return true;
           }
         }
       }
       return false;
     } else {
-      int pos = word.charAt(i) - 'a';
+      int pos = word.charAt(index) - 'a';
       if (node.nodes[pos] == null) {
         return false;
       }
-      return search(word, node.nodes[pos], i + 1);
+      return search(word, node.nodes[pos], index + 1);
     }
   }
 }
