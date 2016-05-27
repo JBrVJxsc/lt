@@ -4,7 +4,7 @@ public class Solution {
       throw new IllegalArgumentException("board and word cannot be null.");
     }
     if (word.length() == 0) {
-      return true;
+      return false;
     }
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
