@@ -12,14 +12,6 @@ public class Solution {
       return mid;
     }
     
-//     if (mid == 0) {
-//       return binary(nums, target, mid + 1, right);
-//     }
-    
-//     if (mid == nums.length - 1) {
-//       return binary(nums, target, left, mid - 1);
-//     }
-    
     if (nums[left] <= nums[mid]) {
       if (nums[left] <= target && target < nums[mid]) {
         return binary(nums, target, left, mid - 1);
