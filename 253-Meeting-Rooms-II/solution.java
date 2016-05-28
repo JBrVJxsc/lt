@@ -8,26 +8,30 @@
  * }
  */
 public class Solution {
-  public int minMeetingRooms(Interval[] list) {
-    Arrays.sort(list, (a, b) -> {
+  public int minMeetingRooms(Interval[] intervals) {
+    if (intervals == null || intervals.length == 0) {
+      return 0;
+    }
+    Arrays.sort(intervals, (a, b) -> {
       return Integer.compare(a.start, b.start);
     });
     
-    List<Interval> l = new ArrayList<>();
-    int min = 0;
+    PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> {
+      return Integer.compare(a.end, b.end);
+    });
+    pq.add(intervals[0]);
     
-    for (Interval interval : list) {
-      List<Interval> newList = new ArrayList<>();
-      newList.add(interval);
-      for (Interval i : l) {
-        if (i.end > interval.start) {
-          newList.add(i);
-        }
+    for (int i = 1; i < intervals.length; i++) {
+      Interval interval = intervals[i];
+      Interval temp = pq.remove();
+      if (temp.end <= interval.start) {
+        temp.end = interval.end;
+      } else {
+        pq.add(interval);
       }
-      l = newList;
-      min = Math.max(min, l.size());
+      pq.add(temp);
     }
     
-    return min;
+    return pq.size();
   }
 }
