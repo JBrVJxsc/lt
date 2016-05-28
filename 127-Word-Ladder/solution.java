@@ -15,7 +15,7 @@ public class Solution {
         for (int j = 'a'; j <= 'z'; j++) {
           chars[i] = (char)j;
           String change = String.valueOf(chars);
-          if (map.containsKey(change)) {
+          if (map.get(change) != null) {
             continue;
           }
           if (dict.contains(change)) {
