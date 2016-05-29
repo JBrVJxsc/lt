@@ -13,12 +13,10 @@ public class Solution {
       return mid;
     } else if (mid > x / mid) {
       return binary(left, mid - 1, x);
+    } else if (mid + 1 > x / (mid + 1)) {
+      return mid;
     } else {
-      if (mid + 1 > x / (mid + 1)) {
-        return mid;
-      } else {
-        return binary(mid + 1, right, x);
-      }
+      return binary(mid + 1, right, x);
     }
   }
 }
