@@ -3,7 +3,7 @@ public class Solution {
     if (nums == null) {
       return -1;
     }
-    if (nums.length < 2) {
+    if (nums.length < 3) {
       return nums.length;
     }
     
