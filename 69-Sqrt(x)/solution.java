@@ -12,7 +12,7 @@ public class Solution {
     if (mid == x / mid) {
       return mid;
     } else if (mid > x / mid) {
-      return binary(left, mid - 1, x);
+      return binary(left, mid, x);
     } else if (mid + 1 > x / (mid + 1)) {
       return mid;
     } else {
