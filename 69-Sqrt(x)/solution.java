@@ -16,7 +16,7 @@ public class Solution {
     } else if (mid + 1 > x / (mid + 1)) {
       return mid;
     } else {
-      return binary(mid + 1, right, x);
+      return binary(mid, right, x);
     }
   }
 }
