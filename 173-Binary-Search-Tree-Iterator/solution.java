@@ -9,10 +9,12 @@
  */
 
 public class BSTIterator {
-
-  private Stack<TreeNode> stack = new Stack<>();
   
+  private Stack<TreeNode> stack = new Stack<>();
+  private TreeNode root = null;
+
   public BSTIterator(TreeNode root) {
+    this.root = root;
     load(root);
   }
 
@@ -32,6 +34,9 @@ public class BSTIterator {
   }
   
   private void load(TreeNode node) {
+    if (node == null) {
+      return;
+    }
     while (node != null) {
       stack.add(node);
       node = node.left;
