@@ -10,6 +10,10 @@
 public class Solution {
   public List<Integer> inorderTraversal(TreeNode root) {
     List<Integer> list = new ArrayList<>();
+    if (root == null) {
+      return list;
+    }
+    
     Stack<TreeNode> stack = new Stack<>();
     load(stack, root);
     
@@ -18,17 +22,18 @@ public class Solution {
       list.add(node.val);
       load(stack, node.right);
     }
-
+    
     return list;
   }
-  
-  private void load(Stack<TreeNode> stack, TreeNode root) {
-    if (root == null) {
+
+  private void load(Stack<TreeNode> stack, TreeNode node) {
+    if (node == null) {
       return;
     }
-    while (root != null) {
-      stack.add(root);
-      root = root.left;
+    
+    while (node != null) {
+      stack.add(node);
+      node = node.left;
     }
   }
 }
