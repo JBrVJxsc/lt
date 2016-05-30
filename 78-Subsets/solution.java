@@ -10,6 +10,8 @@ public List<List<Integer>> subsets(int[] nums) {
     return lists;
   }
   
+  lists.add(new ArrayList<>());
+  
   Arrays.sort(nums);
   
   for (int i : nums) {
@@ -20,14 +22,13 @@ public List<List<Integer>> subsets(int[] nums) {
       copy.add(l);
     }
     
-    List<Integer> l = new ArrayList<>();
-    l.add(i);
-    copy.add(l);
+    // List<Integer> l = new ArrayList<>();
+    // l.add(i);
+    // copy.add(l);
     
     lists.addAll(copy);
   }
   
-  lists.add(new ArrayList<>());
   return lists;
 }
 }
