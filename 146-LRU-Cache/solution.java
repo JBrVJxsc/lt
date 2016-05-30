@@ -1,9 +1,8 @@
 public class LRUCache {
-
+  
   class Node {
     Node pre = null;
     Node next = null;
-    
     int key = 0;
     int val = 0;
     
@@ -34,19 +33,15 @@ public class LRUCache {
   }
 
   public void set(int key, int value) {
-    if (cap <= 0) {
-      return;
-    }
     Node node = map.get(key);
     if (node == null) {
-      if (map.size() == cap) {
+      if (cap == map.size()) {
         removeTail();
       }
       node = new Node(key, value);
       map.put(key, node);
-    } else {
-      node.val = value;
     }
+    node.val = value;
     moveToHead(node);
   }
   
@@ -59,13 +54,13 @@ public class LRUCache {
     }
     node.next = head.next;
     head.next.pre = node;
-    node.pre = head;
     head.next = node;
+    node.pre = head;
   }
   
   private void removeTail() {
     map.remove(tail.pre.key);
+    tail.pre.pre.next = tail;
     tail.pre = tail.pre.pre;
-    tail.pre.next = tail.pre.next.next;
   }
 }
