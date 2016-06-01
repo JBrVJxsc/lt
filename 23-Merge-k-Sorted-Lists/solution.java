@@ -24,6 +24,7 @@ public class Solution {
     
     ListNode dummy = new ListNode(-1);
     ListNode next = dummy;
+    
     while (!pq.isEmpty()) {
       ListNode node = pq.remove();
       next.next = node;
