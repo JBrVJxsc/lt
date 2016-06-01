@@ -1,7 +1,7 @@
 public class Solution {
   public boolean isMatch(String s, String p) {
     if (s == null || p == null) {
-      throw new IllegalArgumentException("s and p cannot be null.");
+      return false;
     }
     
     if (p.length() == 0) {
@@ -12,12 +12,10 @@ public class Solution {
       if (s.length() == 0) {
         return false;
       }
-      
-      if (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.') {
-        return isMatch(s.substring(1), p.substring(1));
+      if (!equals(s.charAt(0), p.charAt(0))) {
+        return false;
       }
-      
-      return false;
+      return isMatch(s.substring(1), p.substring(1));
     }
     
     if (p.charAt(1) == '*') {
@@ -25,7 +23,7 @@ public class Solution {
         return true;
       }
       int i = 0;
-      while (i < s.length() && (s.charAt(i) == p.charAt(0) || p.charAt(0) == '.')) {
+      while (i < s.length() && equals(s.charAt(i), p.charAt(0))) {
         if (isMatch(s.substring(i + 1), p.substring(2))) {
           return true;
         }
@@ -33,5 +31,12 @@ public class Solution {
       }
     }
     return false;
+  }
+  
+  private boolean equals(char a, char b) {
+    if (b == '.') {
+      return true;
+    }
+    return a == b;
   }
 }
