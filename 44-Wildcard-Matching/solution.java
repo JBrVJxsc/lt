@@ -4,8 +4,9 @@ public class Solution {
     int j = 0;
     int star = -1;
     int match = 0;
+  
     while (i < s.length()) {
-      if (i < s.length() && j < p.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?')) {
+      if (i < s.length() && j < p.length() && match(s.charAt(i), p.charAt(j))) {
         i++;
         j++;
       } else if (j < p.length() && p.charAt(j) == '*') {
@@ -20,11 +21,22 @@ public class Solution {
         return false;
       }
     }
-    
+          
     while (j < p.length() && p.charAt(j) == '*') {
-      j++;
+        j++;
     }
-    
+          
     return j == p.length();
   }
+  
+  private boolean match(char a, char b) {
+    if (b == '?') {
+      return true;
+    }
+    return a == b;
+  }
 }
+
+
+// a,b,c,d,e,f,g
+// a,*,e,*
