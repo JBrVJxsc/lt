@@ -1,52 +1,52 @@
 public class WordDictionary {
 
   class Node {
-    boolean isWord = false;
     Node[] nodes = new Node[26];
+    boolean isWord = false;
   }
   
   private Node root = new Node();
   
   // Adds a word into the data structure.
   public void addWord(String word) {
-    Node node = root;
+    Node next = root;
     for (char c : word.toCharArray()) {
       int pos = c - 'a';
-      if (node.nodes[pos] == null) {
-        node.nodes[pos] = new Node();
+      if (next.nodes[pos] == null) {
+        next.nodes[pos] = new Node();
       }
-      node = node.nodes[pos];
+      next = next.nodes[pos];
     }
-    node.isWord = true;
+    next.isWord = true;
   }
 
   // Returns if the word is in the data structure. A word could
   // contain the dot character '.' to represent any one letter.
   public boolean search(String word) {
-    return dfs(word, 0, root);
+    return dfs(root, word, 0);
   }
   
-  private boolean dfs(String word, int index, Node node) {
-    if (node == null) {
-      return false;
-    }          
+  private boolean dfs(Node node, String word, int index) {
     if (index == word.length()) {
       return node.isWord;
     }
     char c = word.charAt(index);
     if (c == '.') {
       for (Node n : node.nodes) {
-        if (dfs(word, index + 1, n)) {
-          return true;
+        if (n != null) {
+          if (dfs(n, word, index + 1)) {
+            return true;
+          }
         }
       }
-      return false;
     } else {
-      if (node.nodes[c - 'a'] == null) {
+      int pos = c - 'a';
+      if (node.nodes[pos] == null) {
         return false;
       }
-      return dfs(word, index + 1, node.nodes[c - 'a']);
+      return dfs(node.nodes[pos], word, index + 1);
     }
+    return false;
   }
 }
 
@@ -54,4 +54,3 @@ public class WordDictionary {
 // WordDictionary wordDictionary = new WordDictionary();
 // wordDictionary.addWord("word");
 // wordDictionary.search("pattern");
-
