@@ -11,43 +11,39 @@ public class Solution {
       return false;
     }
     
-    if (len1 == 0) {
-      return len2 == 1;
-    }
-    
-    if (len2 == 0) {
-      return len1 == 1;
-    }
-    
-    int dif = 0;
-    if (len1 != len2) {
-      dif = 1;
-    }
-    
-    int p1 = 0;
-    int p2 = 0;
-    int life = 1;
-    
-    while (p1 < len1 && p2 < len2) {
-      if (s.charAt(p1) == t.charAt(p2)) {
-        p1++;
-        p2++;
-        continue;
-      } else {
-        if (len1 > len2 && life == 1) {
-          life--;
-          p1++;
-        } else if (len1 < len2 && life == 1) {
-          life--;
-          p2++;
-        } else {
-          p1++;
-          p2++;          
+    if (len1 == len2) {
+      int dif = 0;
+      for (int i = 0; i < len1; i++) {
+        if (s.charAt(i) != t.charAt(i)) {
           dif++;
         }
+        if (dif > 1) {
+          return false;
+        }
       }
+      return dif == 1;
+    } else {
+      int chance = 1;
+      int i = 0;
+      int j = 0;
+      while (i < s.length() && j < t.length()) {
+        if (s.charAt(i) != t.charAt(j)) {
+          chance--;
+          if (len1 > len2) {
+            i++;
+          } else {
+            j++;
+          }
+        } else {
+          i++;
+          j++;
+        }
+        if (chance < 0) {
+          return false;
+        }
+      }
+      return true;
     }
-    
-    return dif == 1;
   }
 }
+
