@@ -11,7 +11,7 @@ public class Solution extends Reader4 {
   
   public int read(char[] buf, int n) {
     char[] temp = new char[4];
-    int count = 0;
+    int counter = 0;
     int pos = 0;
     
     while (n > 0) {
@@ -23,23 +23,22 @@ public class Solution extends Reader4 {
       }
       
       int num = queue.size();
-      
-      if (num == 0) {
-        break;
-      }
-      
       if (n < num) {
         num = n;
       }
       
-      count += num;
+      counter += num;
       n -= num;
       
       for (int i = 0; i < num; i++) {
         buf[pos++] = queue.remove();
       }
+      
+      if (num < 4) {
+        break;
+      }
     }
     
-    return count;
+    return counter;
   }
 }
