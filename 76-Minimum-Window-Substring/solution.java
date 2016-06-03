@@ -17,7 +17,7 @@ public class Solution {
       while (r < s.length() && count != t.length()) {
         char c = s.charAt(r++);
         if (dict.get(c) != null) {
-          int foundNum = found.getOrDefault(c, 0);
+          Integer foundNum = found.getOrDefault(c, 0);
           if (foundNum < dict.get(c)) {
             count++;
           }
