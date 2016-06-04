@@ -1,29 +1,29 @@
 public class Solution {
-  public List<List<Integer>> subsets(int[] nums) {
+public List<List<Integer>> subsets(int[] nums) {
     if (nums == null) {
-      throw new IllegalArgumentException("nums cannot be null.");
+      return new ArrayList<>();
     }
     
+    Arrays.sort(nums);
     List<List<Integer>> result = new ArrayList<>();
     result.add(new ArrayList<>());
     
-    Arrays.sort(nums);
-    
-    for (int i = 1; i <= nums.length; i++) {
-      dfs(nums, result, new ArrayList<>(), i, 0);
+    for (int len = 1; len <= nums.length; len++) {
+      dfs(nums, 0, len, result, new ArrayList<>());
     }
     
     return result;
   }
   
-  private void dfs(int[] nums, List<List<Integer>> result, List<Integer> cur, int len, int start) {
+  private void dfs(int[] nums, int start, int len, List<List<Integer>> lists, List<Integer> cur) {
     if (cur.size() == len) {
-      result.add(new ArrayList<>(cur));
+      lists.add(new ArrayList<>(cur));
       return;
     }
+    
     for (int i = start; i < nums.length; i++) {
       cur.add(nums[i]);
-      dfs(nums, result, cur, len, i + 1);
+      dfs(nums, i + 1, len, lists, cur);
       cur.remove(cur.size() - 1);
     }
   }
