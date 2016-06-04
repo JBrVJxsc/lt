@@ -1,5 +1,3 @@
-  
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -11,22 +9,23 @@
  */
 public class Solution {
   public List<String> binaryTreePaths(TreeNode root) {
-    List<String> list = new ArrayList<>();
     if (root == null) {
+      return new ArrayList<>();
+    }
+    if (root.left == null && root.right == null) {
+      List<String> list = new ArrayList<>();
+      list.add(String.valueOf(root.val));
       return list;
     }
-
-    String str = String.valueOf(root.val);
-    List<String> left = binaryTreePaths(root.left);
-    List<String> right = binaryTreePaths(root.right);
-    left.addAll(right);
-    if (left.size() == 0) {
-      list.add(str);
-    } else {
-      for (String s : left) {
-        list.add(str + "->" + s);
-      }
+    List<String> result = new ArrayList<>();
+    List<String> list = binaryTreePaths(root.left);
+    for (String str : list) {
+      result.add(String.valueOf(root.val) + "->" + str);
     }
-    return list;    
+    list = binaryTreePaths(root.right);
+    for (String str : list) {
+      result.add(String.valueOf(root.val) + "->" + str);
+    }
+    return result;
   }
 }
