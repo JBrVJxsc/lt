@@ -21,7 +21,6 @@ public class Solution {
       stack.add(root.right);
       stack.add(root.left);
     }
-    
     return list;
   }
 }
