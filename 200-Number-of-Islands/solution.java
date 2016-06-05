@@ -1,45 +1,38 @@
 public class Solution {
   public int numIslands(char[][] grid) {
-    if (grid == null) {
-      throw new IllegalArgumentException("grid cannot be null.");
-    }
-    
-    if (grid.length == 0 || grid[0].length == 0) {
+    if (grid == null || grid.length == 0 || grid[0].length == 0) {
       return 0;
     }
-
-    int num = 0;
+    
+    int counter = 0;
     boolean[][] visited = new boolean[grid.length][grid[0].length];
     
     for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++) {
-        int n = dfs(grid, visited, i, j);
-        if (n > 0) {
-          num++;
+      for (int j = 0; j < grid[0].length; j++) {
+        if (grid[i][j] == '1') {
+          if (dfs(grid, i, j, visited) > 0) {
+            counter++;
+          }
         }
       }
     }
     
-    return num;
+    return counter;
   }
   
-  private int dfs(char[][] grid, boolean[][] visited, int row, int col) {
-    if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length) {
+  private int dfs(char[][] grid, int x, int y, boolean[][] visited) {
+    if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || visited[x][y]) {
       return 0;
     }
-    
-    if (visited[row][col] || grid[row][col] == '0') {
+    if (grid[x][y] == '0') {
       return 0;
     }
-    
-    visited[row][col] = true;
-    
+    visited[x][y] = true;
     int num = 1;
-    num += dfs(grid, visited, row, col + 1);
-    num += dfs(grid, visited, row, col - 1);
-    num += dfs(grid, visited, row + 1, col);
-    num += dfs(grid, visited, row - 1, col);
-    
+    num += dfs(grid, x + 1, y, visited);
+    num += dfs(grid, x - 1, y, visited);
+    num += dfs(grid, x, y + 1, visited);
+    num += dfs(grid, x, y - 1, visited);
     return num;
   }
 }
