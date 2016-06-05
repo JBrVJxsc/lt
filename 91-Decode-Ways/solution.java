@@ -4,30 +4,38 @@ public class Solution {
       return 0;
     }
     
-    int[] dp = new int[s.length()];
+    int pre = 0;
+    int prePre = 0;
     for (int i = s.length() - 1; i >= 0; i--) {
+      int cur = 0;
       char c = s.charAt(i);
       if (c == '0') {
+        prePre = pre;
+        pre = cur;
         continue;
       }
       
       if (i == s.length() - 1) {
-        dp[i] = 1;
+        cur = 1;
+        prePre = pre;
+        pre = cur;        
         continue;
       }
       
-      dp[i] += dp[i + 1]; // ways(0) * ways(1234)
+      cur = pre;
       
-      //ways(01)
       if (c == '1' || c == '2' && s.charAt(i + 1) < '7') {
         if (i == s.length() - 2) {
-          dp[i] += 1;
+          cur += 1;
         } else {
-          dp[i] += dp[i + 2];
+          cur += prePre;
         }
       }
+      
+      prePre = pre;
+      pre = cur;      
     }
     
-    return dp[0];
+    return pre;
   }
 }
