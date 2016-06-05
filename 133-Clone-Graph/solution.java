@@ -8,26 +8,22 @@
  */
 public class Solution {
   public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-    return dfs(node, new HashMap<>());
-  }
-  
-  private UndirectedGraphNode dfs(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map) {
     if (node == null) {
       return null;
     }
-    
-    UndirectedGraphNode n = map.get(node.label);
-    if (n != null) {
-      return n;
-    } else {
-      n = new UndirectedGraphNode(node.label);
-      map.put(node.label, n);
+    return clone(node, new HashMap<>());
+  }
+  
+  private UndirectedGraphNode clone(UndirectedGraphNode node, Map<Integer, UndirectedGraphNode> map) {
+    if (map.get(node.label) != null) {
+      return map.get(node.label);
     }
     
+    UndirectedGraphNode copy = new UndirectedGraphNode(node.label);
+    map.put(copy.label, copy);
     for (UndirectedGraphNode neighbor : node.neighbors) {
-      n.neighbors.add(dfs(neighbor, map));
+      copy.neighbors.add(clone(neighbor, map));
     }
-    
-    return n;
+    return copy;
   }
 }
