@@ -10,33 +10,27 @@
 public class Solution {
   public List<String> binaryTreePaths(TreeNode root) {
     List<String> result = new ArrayList<>();
-    if (root == null) {
-      return result;
-    }
     StringBuilder path = new StringBuilder();
-    path.append(root.val);
     dfs(root, path, result);
     return result;
   }
   
   private void dfs(TreeNode root, StringBuilder path, List<String> result) {
+    if (root == null) {
+      return;
+    }
+    path.append(root.val);
     if (root.left == null && root.right == null) {
       result.add(path.toString());
       return;
     }
-    if (root.left != null) {
-      int len = path.length();
-      path.append("->");
-      path.append(root.left.val);
-      dfs(root.left, path, result);
-      path.setLength(len);
-    }
-    if (root.right != null) {
-      int len = path.length();
-      path.append("->");
-      path.append(root.right.val);
-      dfs(root.right, path, result);
-      path.setLength(len);
-    }    
+    int len = path.length();
+    path.append("->");
+    dfs(root.left, path, result);
+    path.setLength(len);
+    
+    path.append("->");
+    dfs(root.right, path, result);
+    path.setLength(len);
   }
 }
