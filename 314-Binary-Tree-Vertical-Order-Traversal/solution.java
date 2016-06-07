@@ -1,58 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Solution {
+    // public List<List<Integer>> convert(TreeNode root) {
+        
+    // }
+    
   private int min = Integer.MAX_VALUE;
   private int max = Integer.MIN_VALUE;
-
+  
   public List<List<Integer>> verticalOrder(TreeNode root) {
-    List<List<Integer>> lists = new ArrayList<>();
+    List<List<Integer>> result = new ArrayList<>();
     if (root == null) {
-      return lists;
+      return result;
     }
     
     dfs(root, 0);
-    
     int size = max - min + 1;
-    List[] temp = new List[size];
     
-    Map<TreeNode, Integer> map = new HashMap<>();
-    map.put(root, -min);
+    for (int i = 0; i < size; i++) {
+      result.add(new ArrayList<>());
+    }
+    
     Queue<TreeNode> queue = new LinkedList<>();
+    Map<TreeNode, Integer> col = new HashMap<>();
     queue.add(root);
+    col.put(root, -min);
+    
     while (!queue.isEmpty()) {
       TreeNode node = queue.remove();
-      int level = map.get(node);
-      if (temp[level] == null) {
-        temp[level] = new ArrayList<>();
-      }
-      temp[level].add(node.val);
-      
+      int colNum = col.get(node);
+      result.get(colNum).add(node.val);
       if (node.left != null) {
         queue.add(node.left);
-        map.put(node.left, level - 1);
+        col.put(node.left, colNum - 1);
       }
-      
       if (node.right != null) {
         queue.add(node.right);
-        map.put(node.right, level + 1);
+        col.put(node.right, colNum + 1);
       }      
     }
     
-    for (List list : temp) {
-      if (list != null) {
-        lists.add(list);
-      }
-    }
-    
-    return lists;
+    return result;
   }
   
-  private void dfs(TreeNode root, int level) {
+  private void dfs(TreeNode root, int col) {
     if (root == null) {
       return;
     }
-    min = Math.min(min, level);
-    max = Math.max(max, level);
-    dfs(root.left, level - 1);
-    dfs(root.right, level + 1);
-  }
+    
+    min = Math.min(min, col);
+    max = Math.max(max, col);
+    
+    dfs(root.left, col - 1);
+    dfs(root.right, col + 1);
+  }    
 }
-
