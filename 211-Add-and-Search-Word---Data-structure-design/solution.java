@@ -1,5 +1,4 @@
 public class WordDictionary {
-
   class Node {
     Node[] nodes = new Node[26];
     boolean isWord = false;
@@ -7,7 +6,6 @@ public class WordDictionary {
   
   private Node root = new Node();
   
-  // Adds a word into the data structure.
   public void addWord(String word) {
     Node next = root;
     for (char c : word.toCharArray()) {
@@ -19,31 +17,27 @@ public class WordDictionary {
     }
     next.isWord = true;
   }
-
-  // Returns if the word is in the data structure. A word could
-  // contain the dot character '.' to represent any one letter.
+  
   public boolean search(String word) {
     return dfs(root, word, 0);
   }
   
   private boolean dfs(Node node, String word, int index) {
+    if (node == null) {
+      return false;
+    }
     if (index == word.length()) {
       return node.isWord;
     }
     char c = word.charAt(index);
     if (c == '.') {
       for (Node n : node.nodes) {
-        if (n != null) {
-          if (dfs(n, word, index + 1)) {
-            return true;
-          }
+        if (dfs(n, word, index + 1)) {
+          return true;
         }
       }
     } else {
       int pos = c - 'a';
-      if (node.nodes[pos] == null) {
-        return false;
-      }
       return dfs(node.nodes[pos], word, index + 1);
     }
     return false;
