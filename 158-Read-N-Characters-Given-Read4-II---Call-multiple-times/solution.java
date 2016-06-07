@@ -2,7 +2,7 @@
       int read4(char[] buf); */
 
 public class Solution extends Reader4 {
-  /**
+    /**
      * @param buf Destination buffer
      * @param n   Maximum number of characters to read
      * @return    The number of characters read
@@ -21,18 +21,17 @@ public class Solution extends Reader4 {
           queue.add(temp[i]);
         }
       }
-      
       int num = queue.size();
-      if (n < num) {
+      if (num > n) {
         num = n;
       }
-      
-      counter += num;
-      n -= num;
       
       for (int i = 0; i < num; i++) {
         buf[pos++] = queue.remove();
       }
+      
+      n -= num;
+      counter += num;
       
       if (num < 4) {
         break;
@@ -42,3 +41,4 @@ public class Solution extends Reader4 {
     return counter;
   }
 }
+
