@@ -9,17 +9,15 @@
  */
 public class Solution {
   public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-    TreeNode succ = null;
-    
+    TreeNode candidate = null;
     while (root != null) {
-      if (p.val < root.val) {
-        succ = root;
+      if (root.val > p.val) {
+        candidate = root;
         root = root.left;
       } else {
         root = root.right;
       }
     }
-    
-    return succ;
+    return candidate;
   }
 }
