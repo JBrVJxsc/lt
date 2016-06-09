@@ -11,39 +11,64 @@ public class Solution {
       return false;
     }
     
+    int i = 0;
+    int j = 0;
+    int dif = 0;
+    
     if (len1 == len2) {
-      int dif = 0;
-      for (int i = 0; i < len1; i++) {
-        if (s.charAt(i) != t.charAt(i)) {
+      while (i < len1) {
+        if (s.charAt(i++) != t.charAt(j++)) {
           dif++;
         }
-        if (dif > 1) {
-          return false;
-        }
       }
-      return dif == 1;
     } else {
+      dif = 1;
       int chance = 1;
-      int i = 0;
-      int j = 0;
-      while (i < s.length() && j < t.length()) {
-        if (s.charAt(i) != t.charAt(j)) {
-          chance--;
-          if (len1 > len2) {
-            i++;
+      if (len1 < len2) {
+        while (i < len1) {
+          if (s.charAt(i) != t.charAt(j)) {
+            if (chance > 0) {
+              chance--;
+              j++;
+              continue;
+            } else {
+              dif++;
+              i++;
+              j++;
+            }
           } else {
+            i++;
             j++;
           }
-        } else {
-          i++;
-          j++;
         }
-        if (chance < 0) {
-          return false;
-        }
+      } else {
+        while (j < len2) {
+          if (s.charAt(i) != t.charAt(j)) {
+            if (chance > 0) {
+              chance--;
+              i++;
+              continue;
+            } else {
+              dif++;
+              i++;
+              j++;
+            }
+          } else {
+            i++;
+            j++;
+          }
+        }        
       }
-      return true;
     }
+    
+    return dif == 1;
   }
 }
+
+
+
+
+
+
+
 
