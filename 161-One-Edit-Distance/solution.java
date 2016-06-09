@@ -24,46 +24,32 @@ public class Solution {
     } else {
       dif = 1;
       int chance = 1;
-      if (len1 < len2) {
-        while (i < len1) {
-          if (s.charAt(i) != t.charAt(j)) {
-            if (chance > 0) {
-              chance--;
+      while (i < len1 && j < len2) {
+        if (s.charAt(i) != t.charAt(j)) {
+          if (chance > 0) {
+            chance--;
+            if (len1 < len2) {
               j++;
-              continue;
             } else {
-              dif++;
               i++;
-              j++;
             }
           } else {
+            dif++;
             i++;
             j++;
           }
+        } else {
+          i++;
+          j++;
         }
-      } else {
-        while (j < len2) {
-          if (s.charAt(i) != t.charAt(j)) {
-            if (chance > 0) {
-              chance--;
-              i++;
-              continue;
-            } else {
-              dif++;
-              i++;
-              j++;
-            }
-          } else {
-            i++;
-            j++;
-          }
-        }        
       }
     }
     
     return dif == 1;
   }
 }
+
+
 
 
 
