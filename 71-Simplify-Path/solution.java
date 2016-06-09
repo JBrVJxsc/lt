@@ -1,17 +1,20 @@
 public class Solution {
   public String simplifyPath(String path) {
     if (path == null) {
-      throw new IllegalArgumentException("path cannot be null.");
+      return null;
     }
     
-    Stack<String> stack = new Stack<>();
     String[] strs = path.split("/");
+    
+    Stack<String> stack = new Stack<>();
     for (String str : strs) {
-      if (str.equals("..")) {
-          if (!stack.isEmpty()) {
-              stack.pop();
-          }
-      } else if (str.length() != 0 && !str.equals(".")) {
+      if (str.length() == 0 || str.equals(".")) {
+        continue;
+      } else if (str.equals("..")) {
+        if (!stack.isEmpty()) {
+          stack.pop();
+        }
+      } else {
         stack.push(str);
       }
     }
@@ -24,7 +27,6 @@ public class Solution {
     while (!stack.isEmpty()) {
       sb.append("/").append(stack.remove(0));
     }
-    
     return sb.toString();
   }
 }
