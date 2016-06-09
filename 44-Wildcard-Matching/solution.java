@@ -1,12 +1,16 @@
 public class Solution {
   public boolean isMatch(String s, String p) {
+    if (s == null || p == null) {
+      throw new IllegalArgumentException("s and p cannot be null.");
+    }
+    
     int i = 0;
     int j = 0;
     int star = -1;
     int match = 0;
-  
+    
     while (i < s.length()) {
-      if (i < s.length() && j < p.length() && match(s.charAt(i), p.charAt(j))) {
+      if (i < s.length() && j < p.length() && same(s.charAt(i), p.charAt(j))) {
         i++;
         j++;
       } else if (j < p.length() && p.charAt(j) == '*') {
@@ -14,29 +18,25 @@ public class Solution {
         j++;
         match = i;
       } else if (star != -1) {
+        j = star + 1;
         match++;
         i = match;
-        j = star + 1;
       } else {
         return false;
       }
     }
-          
+    
     while (j < p.length() && p.charAt(j) == '*') {
-        j++;
+      j++;
     }
-          
+    
     return j == p.length();
   }
   
-  private boolean match(char a, char b) {
-    if (b == '?') {
+  private boolean same(char a, char b) {
+    if (a == b || a == '?' || b == '?') {
       return true;
     }
-    return a == b;
+    return false;
   }
 }
-
-
-// a,b,c,d,e,f,g
-// a,*,e,*
