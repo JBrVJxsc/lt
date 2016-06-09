@@ -33,15 +33,13 @@ public class Solution {
             } else {
               i++;
             }
+            continue;
           } else {
             dif++;
-            i++;
-            j++;
           }
-        } else {
-          i++;
-          j++;
         }
+        i++;
+        j++;
       }
     }
     
