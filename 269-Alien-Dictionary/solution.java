@@ -2,47 +2,51 @@ public class Solution {
   public String alienOrder(String[] words) {
     Map<Character, Set<Character>> in = new HashMap<>();
     Map<Character, Set<Character>> out = new HashMap<>();
-    for (String str : words) {
-        for (char c : str.toCharArray()) {
-            if (in.get(c) == null) {
-                in.put(c, new HashSet<>());
-            }
-            if (out.get(c) == null) {
-                out.put(c, new HashSet<>());
-            }
+    
+    for (String s : words) {
+      for (char c : s.toCharArray()) {
+        if (in.get(c) == null) {
+          in.put(c, new HashSet<>());
         }
+        if (out.get(c) == null) {
+          out.put(c, new HashSet<>());
+        }        
+      }
     }
-    build(in, out, words, 0, words.length - 1, 0);
+    
+    build(words, in, out, 0, 0, words.length - 1);
     return topological(in, out);
   }
-
-  private void build(Map<Character, Set<Character>> in, Map<Character, Set<Character>> out, String[] words, int start, int end, int index) {
+  
+  private void build(String[] words, Map<Character, Set<Character>> in, Map<Character, Set<Character>> out, int index, int start, int end) {
+    while (start <= end && words[start].length() <= index) {
+      start++;
+    }
+    while (start <= end && words[end].length() <= index) {
+      end--;
+    }    
+    
     if (start >= end) {
       return;
     }
     
-    if (index < words[start].length()) {
-      char curChar = words[start].charAt(index);
-      int curIndex = start;
-      for (int i = start + 1; i <= end; i++) {
-        if (index >= words[i].length()) {
-          break;
-        }
-        char c = words[i].charAt(index);
-        if (c != curChar) {
-          addEdge(in, out, curChar, c);
-          build(in, out, words, curIndex, i - 1, index + 1);
-          curChar = c;
-          curIndex = i;
-        }
+    char curChar = words[start].charAt(index);
+    int curIndex = start;
+    for (int i = start + 1; i <= end; i++) {
+      char c = words[i].charAt(index);
+      if (c != curChar) {
+        add(in, out, curChar, c);
+        build(words, in, out, index + 1, curIndex, i - 1);
+        curIndex = i;
+        curChar = c;
       }
-      build(in, out, words, curIndex, end, index + 1);    
     }
+    build(words, in, out, index + 1, curIndex, end);
   }
   
-  private void addEdge(Map<Character, Set<Character>> in, Map<Character, Set<Character>> out, char head, char tail) {
-    in.get(head).add(tail);
-    out.get(tail).add(head);
+  private void add(Map<Character, Set<Character>> in, Map<Character, Set<Character>> out, char c1, char c2) {
+    in.get(c1).add(c2);
+    out.get(c2).add(c1);
   }
   
   private String topological(Map<Character, Set<Character>> in, Map<Character, Set<Character>> out) {
@@ -57,21 +61,17 @@ public class Solution {
     
     while (!queue.isEmpty()) {
       char c = queue.remove();
-      in.remove(c);      
+      in.remove(c);
       sb.append(c);
-      Set<Character> set = out.get(c);
-      if (set == null) {
-        continue;
-      }
-      for (char temp : set) {
-        in.get(temp).remove(c);
-        if (in.get(temp).size() == 0) {
-          queue.add(temp);
+      for (char ch : out.get(c)) {
+        in.get(ch).remove(c);
+        if (in.get(ch).size() == 0) {
+          queue.add(ch);
         }
       }
     }
     
-    if (!in.isEmpty()) {
+    if (in.size() != 0) {
       return "";
     }
     
