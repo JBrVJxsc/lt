@@ -6,23 +6,27 @@ public class Solution {
     
     int l = 0;
     int r = 0;
-    int min = 0;
     int sum = 0;
+    int min = 0;
     
     while (r < nums.length) {
       while (r < nums.length && sum < s) {
         sum += nums[r++];
       }
       
-      if (sum < s) {
-        break;
-      }
+//       if (sum < s) {
+//         break;
+//       }
       
-      while (sum >= s) {
+      while (l < nums.length && sum >= s) {
         sum -= nums[l++];
         if (sum < s) {
           int len = r - l + 1;
-          min = min == 0 ? len : Math.min(min, len);
+          if (min == 0) {
+            min = len;
+          } else {
+            min = Math.min(min, len);
+          }
         }
       }
     }
