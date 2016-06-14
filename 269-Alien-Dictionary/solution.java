@@ -23,7 +23,6 @@ public class Solution {
     
     if (index < words[start].length()) {
       char curChar = words[start].charAt(index);
-      int curLen = 1;
       int curIndex = start;
       for (int i = start + 1; i <= end; i++) {
         if (index >= words[i].length()) {
@@ -32,15 +31,12 @@ public class Solution {
         char c = words[i].charAt(index);
         if (c != curChar) {
           addEdge(in, out, curChar, c);
-          build(in, out, words, curIndex, curIndex + curLen - 1, index + 1);
+          build(in, out, words, curIndex, i - 1, index + 1);
           curChar = c;
-          curLen = 1;
           curIndex = i;
-        } else {
-          curLen++;
         }
       }
-      build(in, out, words, curIndex, curIndex + curLen - 1, index + 1);    
+      build(in, out, words, curIndex, end, index + 1);    
     }
   }
   
