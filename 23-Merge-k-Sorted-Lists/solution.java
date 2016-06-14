@@ -8,7 +8,7 @@
  */
 public class Solution {
   public ListNode mergeKLists(ListNode[] lists) {
-    if (lists == null || lists.length == 0) {
+    if (lists == null) {
       return null;
     }
     
@@ -17,9 +17,10 @@ public class Solution {
     });
     
     for (ListNode node : lists) {
-      if (node != null) {
-        pq.add(node);
+      if (node == null) {
+        continue;
       }
+      pq.add(node);
     }
     
     ListNode dummy = new ListNode(-1);
@@ -28,11 +29,11 @@ public class Solution {
     while (!pq.isEmpty()) {
       ListNode node = pq.remove();
       next.next = node;
+      next = node;
       node = node.next;
       if (node != null) {
         pq.add(node);
       }
-      next = next.next;
     }
     
     return dummy.next;
