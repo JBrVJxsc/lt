@@ -17,24 +17,12 @@ public class Solution {
         i++;
         j++;
       } else {
-        if (len1 < len2) {
-          if (chance > 0) {
-            chance--;
-            j++;
-          } else {
-            i++;
-            j++;
-            dif++;
-          }
-        } else if (len1 > len2) {
-          if (chance > 0) {
-            chance--;
-            i++;
-          } else {
-            i++;
-            j++;
-            dif++;
-          }          
+        if (len1 < len2 && chance > 0) {
+          chance--;
+          j++;
+        } else if (len1 > len2 && chance > 0) {
+          chance--;
+          i++;
         } else {
           i++;
           j++;
