@@ -1,21 +1,19 @@
 public class Solution {
   public boolean isOneEditDistance(String s1, String s2) {
-    int len1 = s1.length();
-    int len2 = s2.length();    
-    int dif = Math.abs(len1 - len2);
+    int dif = Math.abs(s1.length() - s2.length());
     int i = 0;
     int j = 0;
     int chance = 1;
     
-    while (i < len1 && j < len2) {
+    while (i < s1.length() && j < s2.length()) {
       if (s1.charAt(i) == s2.charAt(j)) {
         i++;
         j++;
       } else {
-        if (len1 < len2 && chance > 0) {
+        if (s1.length() < s2.length() && chance > 0) {
           chance--;
           j++;
-        } else if (len1 > len2 && chance > 0) {
+        } else if (s1.length() > s2.length() && chance > 0) {
           chance--;
           i++;
         } else {
