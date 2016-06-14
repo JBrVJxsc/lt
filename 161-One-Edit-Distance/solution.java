@@ -1,12 +1,7 @@
 public class Solution {
   public boolean isOneEditDistance(String s1, String s2) {
     int len1 = s1.length();
-    int len2 = s2.length();
-    
-    if (Math.abs(len1 - len2) > 1) {
-      return false;
-    }
-    
+    int len2 = s2.length();    
     int dif = Math.abs(len1 - len2);
     int i = 0;
     int j = 0;
