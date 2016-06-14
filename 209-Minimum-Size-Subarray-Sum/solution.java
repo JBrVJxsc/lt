@@ -14,10 +14,6 @@ public class Solution {
         sum += nums[r++];
       }
       
-//       if (sum < s) {
-//         break;
-//       }
-      
       while (l < nums.length && sum >= s) {
         sum -= nums[l++];
         if (sum < s) {
