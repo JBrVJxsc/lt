@@ -1,13 +1,5 @@
 public class Solution {
   public String minWindow(String s, String t) {
-    if (s == null || t == null) {
-      throw new IllegalArgumentException("s and t cannot be null.");
-    }
-    
-    if (t.length() > s.length()) {
-      return "";
-    }
-    
     Map<Character, Integer> needs = new HashMap<>();
     Map<Character, Integer> found = new HashMap<>();
     
@@ -16,40 +8,41 @@ public class Solution {
       needs.put(c, num);
     }
     
-    String result = "";
-    int counter = 0;
     int l = 0;
     int r = 0;
+    int count = 0;
+    String min = "";
+    
     while (r < s.length()) {
-      while (r < s.length() && counter != t.length()) {
+      while (r < s.length() && count < t.length()) {
         char c = s.charAt(r++);
-        if (!needs.containsKey(c)) {
-          continue;
+        if (needs.get(c) == null) {
+            continue;
         }
         int num = found.getOrDefault(c, 0);
         if (num < needs.get(c)) {
-          counter++;
+          count++;
         }
-        found.put(c, num + 1);
+        found.put(c, ++num);
       }
       
-      while (l < s.length() && counter == t.length()) {
+      while (l < s.length() && count == t.length()) {
         char c = s.charAt(l++);
-        if (!needs.containsKey(c)) {
-          continue;
-        }
+        if (needs.get(c) == null) {
+            continue;
+        }        
         int num = found.get(c);
         if (num == needs.get(c)) {
-          counter--;
+          count--;
           String sub = s.substring(l - 1, r);
-          if (result.equals("") || sub.length() < result.length()) {
-            result = sub;
+          if (min.length() == 0 || sub.length() < min.length()) {
+            min = sub;
           }
         }
-        found.put(c, num - 1);        
-      }
+        found.put(c, --num);
+      }      
     }
     
-    return result;
+    return min;
   }
 }
