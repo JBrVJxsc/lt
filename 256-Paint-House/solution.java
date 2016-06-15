@@ -8,7 +8,10 @@ public class Solution {
       costs[i][1] += Math.min(costs[i - 1][0], costs[i - 1][2]);
       costs[i][2] += Math.min(costs[i - 1][0], costs[i - 1][1]);
     }
-    int min = Math.min(costs[costs.length - 1][0], costs[costs.length - 1][1]);
-    return Math.min(min, costs[costs.length - 1][2]);
+    int min = Integer.MAX_VALUE;
+    for (int i : costs[costs.length - 1]) {
+      min = Math.min(min, i);
+    }
+    return min;
   }
 }
