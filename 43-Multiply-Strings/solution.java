@@ -1,39 +1,60 @@
 public class Solution {
+  public String multiply(String num1, String num2) {
+    int len1 = num1.length();
+    int len2 = num2.length();
+    int[] nums = new int[len1 + len2];
     
-  public String multiply(String a, String b) {
-    if (a == null || b == null) {
-      throw new IllegalArgumentException("a and b cannot be null.");
-    }
-    
-    int aLen = a.length();
-    int bLen = b.length();
-    int[] result = new int[aLen + bLen];
-    
-    for (int i = aLen - 1; i >= 0; i--) {
-      for (int j = bLen - 1; j >= 0; j--) {
-        int aNum = a.charAt(i) - '0';
-        int bNum = b.charAt(j) - '0';
-        int pos1 = i + j;
-        int pos2 = i + j + 1;
-        int multi = aNum * bNum;
-        multi += result[pos2];
-        result[pos1] += multi / 10;
-        result[pos2] = multi % 10;
+    for (int i = len1 - 1; i >= 0; i--) {
+      for (int j = len2 - 1; j >= 0; j--) {
+        int num = num1.charAt(i) - '0';
+        num *= num2.charAt(j) - '0';
+        int a = i + j;
+        int b = a + 1;
+        
+        num += nums[b];
+        nums[b] = num % 10;
+        nums[a] += num / 10;
       }
     }
     
-    StringBuilder sb = new StringBuilder();
     int i = 0;
-    while (i < result.length && result[i] == 0) {
+    while (i < nums.length && nums[i] == 0) {
       i++;
     }
-    for (; i < result.length; i++) {
-      sb.append(result[i]);
-    }    
-    if (sb.length() == 0) {
-      return "0";
+    
+    StringBuilder sb = new StringBuilder();
+    for (; i < nums.length; i++) {
+      sb.append(nums[i]);
     }
-    return sb.toString();
+    
+    return sb.length() == 0 ? "0" : sb.toString();
   }
-  
 }
+
+
+
+
+//          5  6  7    0,1,2    i
+//                8    0        j
+//        ___________
+//             5  6
+//          4  8
+//       4  0
+// ____________________
+//       4  5  3  6
+           
+//       0  1  2  3     
+           
+//             ^  ^
+//             a  b
+//          a  b 
+// 1:            
+//   a = i + j
+//   b = i + j + 1
+    
+// 2:
+  
+            
+           
+           
+      
