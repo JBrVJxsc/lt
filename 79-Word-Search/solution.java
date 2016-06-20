@@ -1,49 +1,59 @@
 public class Solution {
-  public boolean exist(char[][] board, String word) {
-    if (board == null || word == null) {
-      throw new IllegalArgumentException("board and word cannot be null.");
-    }
-    if (word.length() == 0) {
-      return false;
-    }
-    for (int i = 0; i < board.length; i++) {
-      for (int j = 0; j < board[i].length; j++) {
-        if (board[i][j] == word.charAt(0)) {
-          if (dfs(board, word, new boolean[board.length][board[i].length], i, j, 0)) {
-            return true;
-          }
+    public boolean exist(char[][] board, String word) {
+        int row = board.length;
+        if (row == 0) {
+            return false;
         }
-      }
-    }
-    return false;
-  }
-  
-  private boolean dfs(char[][] board, String word, boolean[][] visited, int row, int col, int index) {
-    if (index == word.length()) {
-      return true;
-    }
-    if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) {
-      return false;
-    }
-    if (visited[row][col] || board[row][col] != word.charAt(index)) {
-      return false;
-    }
-    visited[row][col] = true;
-    
-    if (dfs(board, word, visited, row + 1, col, index + 1)) {
-      return true;
-    }
-    if (dfs(board, word, visited, row - 1, col, index + 1)) {
-      return true;
-    }
-    if (dfs(board, word, visited, row, col + 1, index + 1)) {
-      return true;
-    }
-    if (dfs(board, word, visited, row, col - 1, index + 1)) {
-      return true;
+        
+        int col = board[0].length;
+        if (col == 0) {
+            return false;
+        }
+        
+        if (word == null || word.length() == 0) {
+            return false;
+        }
+        
+        boolean[][] visited = new boolean[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (dfs(board, word, 0, i, j, row, col, visited)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
-    visited[row][col] = false;
-    return false;
-  }
+    private boolean dfs(char[][] board, String word, int index, int x, int y, int row, int col, boolean[][] visited) {
+        if (index == word.length()) {
+            return true;
+        }        
+        
+        if (x < 0 || x >= row || y < 0 || y >= col || visited[x][y]) {
+            return false;
+        }
+        
+        if (board[x][y] != word.charAt(index)) {
+            return false;
+        }
+        
+        visited[x][y] = true;        
+        if (dfs(board, word, index + 1, x + 1, y, row, col, visited)) {
+            return true;
+        }        
+        if (dfs(board, word, index + 1, x - 1, y, row, col, visited)) {
+            return true;
+        }        
+        if (dfs(board, word, index + 1, x, y + 1, row, col, visited)) {
+            return true;
+        }        
+        if (dfs(board, word, index + 1, x, y - 1, row, col, visited)) {
+            return true;
+        }                
+        visited[x][y] = false;
+        
+        return false;
+    }
 }
