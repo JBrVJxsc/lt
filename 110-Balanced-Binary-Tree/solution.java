@@ -8,26 +8,29 @@
  * }
  */
 public class Solution {
-  public boolean isBalanced(TreeNode root) {
-    return depth(root, 1) > 0;
-  }
-  
-  private int depth(TreeNode root, int depth) {
-    if (root == null) {
-      return depth;
+    public boolean isBalanced(TreeNode root) {
+        return dfs(root, 0) != -1;
     }
-    depth += 1;
-    int left = depth(root.left, depth);
-    if (left < 0) {
-      return left;
+    
+    private int dfs(TreeNode node, int depth) {
+        if (node == null) {
+            return depth;
+        }
+        
+        int l = dfs(node.left, depth + 1);
+        if (l < 0) {
+            return l;
+        }
+        
+        int r = dfs(node.right, depth + 1);
+        if (r < 0) {
+            return r;
+        }
+        
+        if (Math.abs(l - r) > 1) {
+            return -1;
+        }
+        
+        return Math.max(l, r);
     }
-    int right = depth(root.right, depth);
-    if (right < 0) {
-      return right;
-    }
-    if (Math.abs(left - right) > 1) {
-      return -1;
-    }
-    return Math.max(left, right);
-  }
 }
