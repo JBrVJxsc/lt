@@ -1,26 +1,22 @@
 public class Solution {
-    // public int (int x) {
-        
-    // }
+    public int mySqrt(int x) {
+        if (x < 2) {
+            return x;
+        }
+        return binary(1, x, x);
+    }
     
-      public int mySqrt(int x) {
-    if (x < 1) {
-      return x;
+    private int binary(int l, int r, int x) {
+        int m = l + (r - l) / 2;
+        if (m == x / m) {
+            return m;
+        }
+        if (m < x / m) {
+            if (m + 1 > x / (m + 1)) {
+                return m;
+            }
+            return binary(m + 1, r, x);
+        }
+        return binary(l, m - 1, x);
     }
-    return binary(x, 1, x);
-  }
-  
-  private int binary(int x, int left, int right) {
-    int mid = left + (right - left) / 2;
-    if (mid == x / mid) {
-      return mid;
-    } else if (mid > x / mid) {
-      return binary(x, left, mid - 1);
-    } else {
-      if (mid + 1 > x / (mid + 1)) {
-        return mid;
-      }        
-      return binary(x, mid + 1, right);
-    }
-  }
 }
