@@ -7,7 +7,7 @@ public class MinStack {
     /** initialize your data structure here. */
     public MinStack() {
         min.push(Integer.MAX_VALUE);
-        size.push(0);
+        size.push(1233);
     }
     
     public void push(int x) {
