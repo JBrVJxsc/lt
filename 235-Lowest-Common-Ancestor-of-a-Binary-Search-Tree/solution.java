@@ -13,10 +13,6 @@ public class Solution {
             return null;
         }
         
-        if (p.val <= root.val && root.val <= q.val || q.val <= root.val && root.val <= p.val) {
-            return root;
-        }        
-        
         if (p.val < root.val && q.val < root.val) {
             return lowestCommonAncestor(root.left, p, q);
         }
