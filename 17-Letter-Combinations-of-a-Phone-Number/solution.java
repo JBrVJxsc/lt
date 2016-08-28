@@ -1,33 +1,33 @@
 public class Solution {
-  
-  private String[] map = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};  
-  
-  public List<String> letterCombinations(String digits) {
-    List<String> list = new ArrayList<>();
-    if (digits == null || digits.length() == 0) {
-      return list;
-    }
+    String[] map = new String[]{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
     
-    for (char c : digits.toCharArray()) {
-      list = combine(list, map[c - '0']);
-    }
-    
-    return list;
-  }
-
-  private List<String> combine(List<String> list, String s) {
-    List<String> result = new ArrayList<>();
-    if (list.size() == 0) {
-      for (char c : s.toCharArray()) {
-        result.add(String.valueOf(c));
-      }
-    } else {
-      for (char c : s.toCharArray()) {
-        for (String str : list) {
-          result.add(str + String.valueOf(c));            
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.length() == 0) {
+            return new ArrayList<>();
         }
-      }      
+        
+        List<String> result = new ArrayList<>();
+        for (char c : digits.toCharArray()) {
+            result = combine(result, map[c - '0']);
+        }
+        
+        return result;
     }
-    return result;
-  }
+    
+    private List<String> combine(List<String> list, String str) {
+        if (list.size() == 0) {
+            for (char c : str.toCharArray()) {
+                list.add(String.valueOf(c));
+            }
+            return list;
+        } else {
+            List<String> temp = new ArrayList<>();
+            for (String s : list) {
+                for (char c : str.toCharArray()) {
+                    temp.add(s + String.valueOf(c));
+                }                
+            }
+            return temp;
+        }
+    }
 }
