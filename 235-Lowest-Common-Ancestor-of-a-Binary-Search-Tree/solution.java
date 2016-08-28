@@ -13,17 +13,14 @@ public class Solution {
             return null;
         }
         
-        if (root == p || root == q) {
-            return root;
+        if (p.val < root.val && q.val < root.val) {
+            return lowestCommonAncestor(root.left, p, q);
         }
         
-        TreeNode l = lowestCommonAncestor(root.left, p, q);
-        TreeNode r = lowestCommonAncestor(root.right, p, q);
-        
-        if (l != null && r != null) {
-            return root;
+        if (p.val > root.val && q.val > root.val) {
+            return lowestCommonAncestor(root.right, p, q);
         }
         
-        return l == null ? r : l;
+        return root;
     }
 }
