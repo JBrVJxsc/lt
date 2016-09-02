@@ -8,20 +8,32 @@
  * }
  */
 public class Solution {
-  public boolean isValidBST(TreeNode root) {
-    return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
-  }
-  
-  private boolean dfs(TreeNode root, long lower, long upper) {
-    if (root == null) {
-      return true;
+    public boolean isValidBST(TreeNode root) {
+        return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
-    if (root.val <= lower || root.val >= upper) {
-      return false;
+    
+    private boolean dfs(TreeNode node, long lo, long hi) {
+        if (node == null) {
+            return true;
+        }
+        if (node.left != null) {
+            if (node.val <= node.left.val) {
+                return false;
+            }
+        }
+        if (node.right != null) {
+            if (node.val >= node.right.val) {
+                return false;
+            }
+        }
+        if (node.val <= lo || node.val >= hi) {
+            return false;
+        }
+        return dfs(node.left, lo, node.val) && dfs(node.right, node.val, hi);
     }
-    if (!dfs(root.left, lower, root.val)) {
-      return false;
-    }
-    return dfs(root.right, root.val, upper);
-  }
+    
 }
+
+// 1. Check if the value of the node is > left.val && < right.val;
+// 2. Check if the value of the node is in the boundery.
+
