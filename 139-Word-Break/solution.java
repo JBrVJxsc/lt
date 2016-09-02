@@ -1,31 +1,17 @@
 public class Solution {
     public boolean wordBreak(String s, Set<String> dict) {
-        if (s == null) {
-            return false;
-        }
-        boolean[] result = new boolean[s.length()];
-        boolean[] visited = new boolean[s.length()];
-        return dfs(s, dict, 0, result, visited);
-    }
-    
-    private boolean dfs(String s, Set<String> dict, int index, boolean[] result, boolean[] visited) {
-        if (index == s.length()) {
-            return true;
-        }
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
         
-        if (visited[index]) {
-            return result[index];
-        }
-        visited[index] = true;
-        
-        for (int i = index; i < s.length(); i++) {
-            String sub = s.substring(index, i + 1);
-            if (dict.contains(sub) && dfs(s, dict, i + 1, result, visited)) {
-                result[index] = true;
-                break;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && dict.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
             }
         }
         
-        return result[index];
+        return dp[s.length()];
     }
 }
