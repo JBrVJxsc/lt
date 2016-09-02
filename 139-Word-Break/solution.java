@@ -22,6 +22,7 @@ public class Solution {
             String sub = s.substring(index, i + 1);
             if (dict.contains(sub) && dfs(s, dict, i + 1, result, visited)) {
                 result[index] = true;
+                break;
             }
         }
         
