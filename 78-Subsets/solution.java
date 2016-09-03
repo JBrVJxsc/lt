@@ -1,30 +1,33 @@
 public class Solution {
-  public List<List<Integer>> subsets(int[] nums) {
-    List<List<Integer>> result = new ArrayList<>();
-    if (nums == null) {
-      return result;
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> lists = new ArrayList<>();
+        lists.add(new ArrayList<>());
+        
+        if (nums == null || nums.length == 0) {
+            return lists;
+        }
+        
+        for (int i = 1; i <= nums.length; i++) {
+            dfs(lists, new ArrayList<>(), i, 0, nums);
+        }
+        
+        return lists;
     }
     
-    Arrays.sort(nums);
-    result.add(new ArrayList<>());
-    
-    for (int len = 1; len <= nums.length; len++) {
-      dfs(nums, len, 0, new ArrayList<>(), result);
+    private void dfs(List<List<Integer>> lists, List<Integer> cur, int len, int index, int[] nums) {
+        if (cur.size() == len) {
+            lists.add(new ArrayList<>(cur));
+            return;
+        }
+        
+        if (index == nums.length) {
+            return;
+        }        
+        
+        for (int i = index; i < nums.length; i++) {
+            cur.add(nums[i]);
+            dfs(lists, cur, len, i + 1, nums);
+            cur.remove(cur.size() - 1);
+        }
     }
-    
-    return result;
-  }
-  
-  private void dfs(int[] nums, int len, int index, List<Integer> path, List<List<Integer>> result) {
-    if (path.size() == len) {
-      result.add(new ArrayList<>(path));
-      return;
-    }
-    
-    for (int i = index; i < nums.length; i++) {
-      path.add(nums[i]);
-      dfs(nums, len, i + 1, path, result);
-      path.remove(path.size() - 1);
-    }
-  }
 }
