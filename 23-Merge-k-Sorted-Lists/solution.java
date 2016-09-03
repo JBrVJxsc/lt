@@ -7,35 +7,33 @@
  * }
  */
 public class Solution {
-  public ListNode mergeKLists(ListNode[] lists) {
-    if (lists == null) {
-      return null;
+    public ListNode mergeKLists(ListNode[] lists) {
+        Queue<ListNode> q = new PriorityQueue<>((a, b) -> {
+            return Integer.compare(a.val, b.val);
+        });
+        
+        for (ListNode node : lists) {
+            if (node != null) {
+                q.add(node);
+            }
+        }
+        
+        ListNode dummy = new ListNode(-1);
+        ListNode next = dummy;
+        
+        while (!q.isEmpty()) {
+            ListNode node = q.remove();
+            next.next = node;
+            node = node.next;
+            
+            if (node != null) {
+                q.add(node);
+            }
+            
+            next.next.next = null;
+            next = next.next;
+        }
+        
+        return dummy.next;
     }
-    
-    Queue<ListNode> pq = new PriorityQueue<>((a, b) -> {
-      return Integer.compare(a.val, b.val);
-    });
-    
-    for (ListNode node : lists) {
-      if (node == null) {
-        continue;
-      }
-      pq.add(node);
-    }
-    
-    ListNode dummy = new ListNode(-1);
-    ListNode next = dummy;
-    
-    while (!pq.isEmpty()) {
-      ListNode node = pq.remove();
-      next.next = node;
-      next = node;
-      node = node.next;
-      if (node != null) {
-        pq.add(node);
-      }
-    }
-    
-    return dummy.next;
-  }
 }
