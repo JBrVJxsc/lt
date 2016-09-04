@@ -1,9 +1,9 @@
 public class RandomizedSet {
-
-    private List<Integer> nums = new ArrayList<>();
-    private Map<Integer, Integer> map = new HashMap<>();
-    private Random random = new Random();
     
+    private Map<Integer, Integer> map = new HashMap<>();
+    private List<Integer> nums = new ArrayList<>();
+    private Random random = new Random();
+
     /** Initialize your data structure here. */
     public RandomizedSet() {
         
@@ -24,11 +24,11 @@ public class RandomizedSet {
         if (map.get(val) == null) {
             return false;
         }
-        int loc = map.get(val);
-        if (loc != nums.size() - 1) {
+        int index = map.get(val);
+        if (index != nums.size() - 1) {
             int last = nums.get(nums.size() - 1);
-            nums.set(loc, last);
-            map.put(last, loc);
+            nums.set(index, last);
+            map.put(last, index);
         }
         map.remove(val);
         nums.remove(nums.size() - 1);
