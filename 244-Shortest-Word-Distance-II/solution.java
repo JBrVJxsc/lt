@@ -15,9 +15,14 @@ public class WordDistance {
         int min = Integer.MAX_VALUE;
         List<Integer> l1 = map.get(word1);
         List<Integer> l2 = map.get(word2);
-        for (int i1 : l1) {
-            for (int i2 : l2) {
-                min = Math.min(min, Math.abs(i1 - i2));
+        int i = 0;
+        int j = 0;
+        while (i < l1.size() && j < l2.size()) {
+            min = Math.min(min, Math.abs(l1.get(i) - l2.get(j)));
+            if (l1.get(i) < l2.get(j)) {
+                i++;
+            } else {
+                j++;
             }
         }
         return min;
