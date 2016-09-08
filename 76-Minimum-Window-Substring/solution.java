@@ -1,48 +1,52 @@
 public class Solution {
-  public String minWindow(String s, String t) {
-    Map<Character, Integer> needs = new HashMap<>();
-    Map<Character, Integer> found = new HashMap<>();
-    
-    for (char c : t.toCharArray()) {
-      int num = needs.getOrDefault(c, 0) + 1;
-      needs.put(c, num);
+    public String minWindow(String s, String t) {
+        Map<Character, Integer> need = new HashMap<>();
+        Map<Character, Integer> find = new HashMap<>();
+        
+        for (char c : t.toCharArray()) {
+            int count = need.getOrDefault(c, 0) + 1;
+            need.put(c, count);
+        }
+        
+        int count = 0;
+        int l = 0;
+        int r = 0;
+        String min = "";
+        
+        while (r < s.length()) {
+            while (r < s.length() && count != t.length()) {
+                char c = s.charAt(r++);
+                Integer num = need.get(c);
+                if (num != null) {
+                    int cur = find.getOrDefault(c, 0);
+                    if (cur < num) {
+                        count++;
+                    }
+                    find.put(c, cur + 1);
+                }
+            }
+            
+            if (count != t.length()) {
+                return min;
+            }
+            
+            while (count == t.length()) {
+                char c = s.charAt(l++);
+                Integer num = need.get(c);
+                if (num != null) {
+                    int cur = find.get(c);
+                    if (cur == num) {
+                        count--;
+                        String str = s.substring(l - 1, r);
+                        if (min.length() == 0 || str.length() < min.length()) {
+                            min = str;
+                        }
+                    }
+                    find.put(c, cur - 1);
+                }                
+            }
+        }
+        
+        return min;
     }
-    
-    int l = 0;
-    int r = 0;
-    int count = 0;
-    String min = "";
-    
-    while (r < s.length()) {
-      while (r < s.length() && count < t.length()) {
-        char c = s.charAt(r++);
-        if (needs.get(c) == null) {
-            continue;
-        }
-        int num = found.getOrDefault(c, 0);
-        if (num < needs.get(c)) {
-          count++;
-        }
-        found.put(c, ++num);
-      }
-      
-      while (l < s.length() && count == t.length()) {
-        char c = s.charAt(l++);
-        if (needs.get(c) == null) {
-            continue;
-        }        
-        int num = found.get(c);
-        if (num == needs.get(c)) {
-          count--;
-          String sub = s.substring(l - 1, r);
-          if (min.length() == 0 || sub.length() < min.length()) {
-            min = sub;
-          }
-        }
-        found.put(c, --num);
-      }      
-    }
-    
-    return min;
-  }
 }
