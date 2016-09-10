@@ -1,30 +1,28 @@
 public class Solution {
-  public List<List<Integer>> permute(int[] nums) {
-    if (nums == null) {
-      return new ArrayList<>();
-    }
-    List<List<Integer>> result = new ArrayList<>();
-    
-    dfs(nums, result, new ArrayList<>(), new boolean[nums.length]);
-    
-    return result;
-  }
-  
-  private void dfs(int[] nums, List<List<Integer>> result, List<Integer> cur, boolean[] visited) {
-    if (cur.size() == nums.length) {
-      result.add(new ArrayList<>(cur));
-      return;
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> lists = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return lists;
+        }
+        dfs(nums, new HashSet<>(), lists, new ArrayList<>());
+        return lists;
     }
     
-    for (int i = 0; i < nums.length; i++) {
-      if (visited[i]) {
-        continue;
-      }
-      visited[i] = true;
-      cur.add(nums[i]);
-      dfs(nums, result, cur, visited);
-      cur.remove(cur.size() - 1);
-      visited[i] = false;
+    private void dfs(int[] nums, Set<Integer> set, List<List<Integer>> lists, List<Integer> cur) {
+        if (cur.size() == nums.length) {
+            lists.add(new ArrayList<>(cur));
+            return;
+        }
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(i)) {
+                continue;
+            }
+            cur.add(nums[i]);
+            set.add(i);
+            dfs(nums, set, lists, cur);
+            set.remove(i);
+            cur.remove(cur.size() - 1);
+        }
     }
-  }
 }
