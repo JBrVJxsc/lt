@@ -1,31 +1,29 @@
 public class Solution {
-  public List<List<Integer>> permuteUnique(int[] nums) {
-    Set<List<Integer>> lists = new HashSet<>();
-    if (nums == null) {
-      return new ArrayList<>();
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> lists = new ArrayList<>();
+        if (nums == null || nums.length == 0) {
+            return lists;
+        }
+        Arrays.sort(nums);
+        dfs(nums, new HashSet<>(), lists, new ArrayList<>());
+        return lists;
     }
     
-    Arrays.sort(nums);
-    dfs(nums, lists, new ArrayList<>(), new boolean[nums.length]);
-    
-    return new ArrayList<>(lists);
-  }
-  
-  private void dfs(int[] nums, Set<List<Integer>> lists, List<Integer> cur, boolean[] visited) {
-    if (cur.size() == nums.length) {
-      lists.add(new ArrayList<>(cur));
-      return;
+    private void dfs(int[] nums, Set<Integer> set, List<List<Integer>> lists, List<Integer> cur) {
+        if (cur.size() == nums.length) {
+            lists.add(new ArrayList<>(cur));
+            return;
+        }
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (set.contains(i) || i != 0 && nums[i] == nums[i - 1] && set.contains(i - 1)) {
+                continue;
+            }
+            cur.add(nums[i]);
+            set.add(i);
+            dfs(nums, set, lists, cur);
+            set.remove(i);
+            cur.remove(cur.size() - 1);
+        }
     }
-    
-    for (int i = 0; i < nums.length; i++) {
-      if (visited[i]) {
-        continue;
-      }
-      visited[i] = true;
-      cur.add(nums[i]);
-      dfs(nums, lists, cur, visited);
-      cur.remove(cur.size() - 1);
-      visited[i] =false;
-    }
-  }
 }
