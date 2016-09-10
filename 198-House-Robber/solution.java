@@ -4,14 +4,17 @@ public class Solution {
             return 0;
         }
         
+        int pre = nums[0];
+        int prePre = 0;
+        int max = pre;
+        
         for (int i = 1; i < nums.length; i++) {
-            if (i == 1) {
-                nums[i] = Math.max(nums[i - 1], nums[i]);
-            } else {
-                nums[i] = Math.max(nums[i - 1], nums[i] + nums[i - 2]);
-            }
+            int temp = Math.max(pre, nums[i] + prePre);
+            prePre = pre;
+            pre = temp;
+            max = Math.max(max, pre);
         }
         
-        return nums[nums.length - 1];
+        return max;
     }
 }
