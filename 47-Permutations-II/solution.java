@@ -16,7 +16,7 @@ public class Solution {
         }
         
         for (int i = 0; i < nums.length; i++) {
-            if (set.contains(i) || i != 0 && nums[i] == nums[i - 1] && !set.contains(i - 1)) {
+            if (set.contains(i) || i != 0 && nums[i] == nums[i - 1] && set.contains(i - 1)) {
                 continue;
             }
             cur.add(nums[i]);
