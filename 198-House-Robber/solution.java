@@ -9,10 +9,9 @@ public class Solution {
         int max = pre;
         
         for (int i = 1; i < nums.length; i++) {
-            int temp = Math.max(pre, nums[i] + prePre);
+            max = Math.max(pre, nums[i] + prePre);
             prePre = pre;
-            pre = temp;
-            max = Math.max(max, pre);
+            pre = max;
         }
         
         return max;
