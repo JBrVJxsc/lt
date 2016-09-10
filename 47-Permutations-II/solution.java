@@ -4,26 +4,29 @@ public class Solution {
         if (nums == null || nums.length == 0) {
             return lists;
         }
+
         Arrays.sort(nums);
-        dfs(nums, new HashSet<>(), lists, new ArrayList<>());
+        boolean[] visited = new boolean[nums.length];
+        dfs(nums, lists, new ArrayList<Integer>(), visited);
         return lists;
     }
-    
-    private void dfs(int[] nums, Set<Integer> set, List<List<Integer>> lists, List<Integer> cur) {
+
+    private void dfs(int[] nums, List<List<Integer>> lists, List<Integer> cur, boolean[] visited) {
         if (cur.size() == nums.length) {
-            lists.add(new ArrayList<>(cur));
-            return;
+            List<Integer> list = new ArrayList<>(cur);
+            lists.add(list);
         }
-        
+
         for (int i = 0; i < nums.length; i++) {
-            if (set.contains(i) || i != 0 && nums[i] == nums[i - 1] && !set.contains(i - 1)) {
+            if (visited[i] || i > 0 && nums[i] == nums[i - 1] && visited[i - 1]) {
                 continue;
             }
+
             cur.add(nums[i]);
-            set.add(i);
-            dfs(nums, set, lists, cur);
-            set.remove(i);
+            visited[i] = true;
+            dfs(nums, lists, cur, visited);
             cur.remove(cur.size() - 1);
+            visited[i] = false;
         }
     }
 }
