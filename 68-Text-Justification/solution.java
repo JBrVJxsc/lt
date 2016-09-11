@@ -12,12 +12,7 @@ public class Solution {
         while (i < words.length) {
             String str = words[i];
             if (curLen + str.length() + cur.size() > maxWidth) {
-                if (cur.size() == 1) {
-                    str = cur.get(0);
-                    str = padRight(str, maxWidth - str.length());
-                } else {
-                    str = justify(cur, curLen, maxWidth);
-                }
+                str = justify(cur, curLen, maxWidth);
                 list.add(str);                
                 cur = new ArrayList<>();
                 curLen = 0;
@@ -26,22 +21,22 @@ public class Solution {
                 cur.add(str);
                 curLen += str.length();
             }
+            
             i++;               
         }
-
-        if (cur.size() == 1) {
-            String str = cur.get(0);
-            str = padRight(str, maxWidth - str.length());
-            list.add(str);
-        } else {
-            String str = justifyForLast(cur, curLen, maxWidth);
-            list.add(str);
-        }
+        
+        String str = justifyForLast(cur, curLen, maxWidth);
+        list.add(str);
         
         return list;
     }
     
     private String justify(List<String> list, int len, int maxWidth) {
+        if (list.size() == 1) {
+            String str = list.get(0);
+            str = padRight(str, maxWidth - str.length());
+            return str;
+        }
         int remain = maxWidth - len;
         while (remain > 0) {
             for (int i = 0; i < list.size() - 1 && remain-- > 0; i++) {
@@ -54,6 +49,11 @@ public class Solution {
     }
     
     private String justifyForLast(List<String> list, int len, int maxWidth) {
+        if (list.size() == 1) {
+            String str = list.get(0);
+            str = padRight(str, maxWidth - str.length());
+            return str;
+        }
         int remain = maxWidth - len;
         for (int i = 0; i < list.size() - 1; i++) {
             String str = list.get(i);
