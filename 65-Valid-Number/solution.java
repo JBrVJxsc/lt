@@ -68,10 +68,10 @@ public class Solution {
                 if (signCount == 2) {
                     return false;
                 }
-                if (i != 0 && eCount == 0) {
+                if (i == len - 1) {
                     return false;
                 }
-                if (i == len - 1) {
+                if (i != 0 && eCount == 0) {
                     return false;
                 }
                 signCount++;
@@ -81,10 +81,10 @@ public class Solution {
                 if (eCount == 1) {
                     return false;
                 }
-                if (digitCount == 0) {
+                if (i == len - 1) {
                     return false;
                 }
-                if (i == len - 1) {
+                if (digitCount == 0) {
                     return false;
                 }
                 eCount++;
