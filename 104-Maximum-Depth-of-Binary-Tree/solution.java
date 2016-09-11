@@ -8,23 +8,16 @@
  * }
  */
 public class Solution {
-    
-    private int max = 0;
-    
     public int maxDepth(TreeNode root) {
-        dfs(root, 1);
-        return max;
-    }
-    
-    private void dfs(TreeNode node, int depth) {
-        if (node == null) {
-            return;
+        if (root == null) {
+            return 0;
         }
-        if (node.left == null && node.right == null) {
-            max = Math.max(max, depth);
-            return;
+        if (root.left == null && root.right == null) {
+            return 1;
         }
-        dfs(node.left, depth + 1);
-        dfs(node.right, depth + 1);
+        int depth = maxDepth(root.left);
+        depth = Math.max(depth, maxDepth(root.right));
+        
+        return depth + 1;
     }
 }
