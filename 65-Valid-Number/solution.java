@@ -1,64 +1,84 @@
 public class Solution {
     public boolean isNumber(String s) {
-        if (s == null) return false;
+        if (s == null) {
+            return false;
+        }
         
         s = s.trim();
-        int n = s.length();
+        int len = s.length();
+        if (len == 0) {
+            return false;
+        }
         
-        if (n == 0) return false;
-        
-        // flags
-        int signCount = 0;
+        int sign = 0;
         boolean hasE = false;
         boolean hasNum = false;
-        boolean hasPoint = false;
+        boolean hasDot = false;
         
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             
-            // invalid character
-            if (!isValid(c)) return false;
+            if (!isValid(c)) {
+                return false;
+            }
             
-            // digit is always fine
-            if (c >= '0' && c <= '9') hasNum = true;
+            if (isDigit(c)) {
+                hasNum = true;
+            }
             
-            // e or E
-            if (c == 'e' || c == 'E') {
-                // e cannot appear twice and digits must be in front of it
-                if (hasE || !hasNum) return false;
-                // e cannot be the last one
-                if (i == n - 1) return false;
-                
+            if (isE(c)) {
+                if (hasE || !hasNum) {
+                    return false;
+                }
+                if (i == len - 1) {
+                    return false;
+                }
                 hasE = true;
             }
             
-            // decimal place
-            if (c == '.') {
-                // . cannot appear twice and it cannot appear after e
-                if (hasPoint || hasE) return false;
-                // if . is the last one, digits must be in front of it, e.g. "7."
-                if (i == n - 1 && !hasNum) return false;
-                
-                hasPoint = true;
+            if (isDot(c)) {
+                if (hasDot || hasE) {
+                    return false;
+                }
+                if (i == len - 1 && !hasNum) {
+                    return false;
+                }
+                hasDot = true;
             }
             
-            // signs
-            if (c == '+' || c == '-') {
-                // no more than 2 signs
-                if (signCount == 2) return false;
-                // sign cannot be the last one
-                if (i == n - 1) return false;
-                // sign can appear in the middle only when e appears in front
-                if (i > 0 && !hasE) return false;
-                
-                signCount++;
+            if (isSign(c)) {
+                if (sign == 2) {
+                    return false;
+                }
+                if (i == len - 1) {
+                    return false;
+                }
+                if (i > 0 && !hasE) {
+                    return false;
+                }
+                sign++;
             }
         }
-        
         return true;
     }
     
-    boolean isValid(char c) {
-        return c == '.' || c == '+' || c == '-' || c == 'e' || c == 'E' || c >= '0' && c <= '9';
+    private boolean isValid(char c) {
+        return isDot(c) || isSign(c) || isE(c) || isDigit(c);
+    }
+    
+    private boolean isDigit(char c) {
+        return '0' <= c && c <= '9';
+    }
+    
+    private boolean isSign(char c) {
+        return c == '+' || c == '-';
+    }
+    
+    private boolean isE(char c) {
+        return c == 'e' || c == 'E';
+    }
+    
+    private boolean isDot(char c) {
+        return c == '.';
     }
 }
