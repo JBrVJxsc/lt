@@ -9,49 +9,41 @@
  */
 public class Solution {
     public int maxPoints(Point[] points) {
-        if (points == null) {
+        if (points == null || points.length == 0) {
             return 0;
         }
-        if (points.length < 3) {
-            return points.length;
-        }
         
-        int max = 0;
-        
+        Map<Double, Integer> map = null;
+        int max = 1;
         for (int i = 0; i < points.length; i++) {
-            Map<Double, Integer> map = new HashMap<>();
-            int temp = 1;
+            map = new HashMap<>();
             int same = 0;
+            int curMax = 1;
             for (int j = 0; j < points.length; j++) {
                 if (i == j) {
                     continue;
                 }
-                if (points[i].x == points[j].x && points[i].y == points[j].y) {
+                Point p1 = points[i];
+                Point p2 = points[j];
+                if (p1.y == p2.y && p1.x == p2.x) {
                     same++;
                     continue;
                 }
-                double slope = slope(points[i], points[j]);
-                Integer count = map.get(slope);
-                if (count == null) {
-                    count = 2;
-                } else {
-                    count += 1;
-                }
+                double slope = getSlope(p1, p2);
+                Integer count = map.getOrDefault(slope, 1) + 1;
                 map.put(slope, count);
-                temp = Math.max(temp, count);
+                curMax = Math.max(curMax, count);
             }
-            max = Math.max(max, temp + same);
+            max = Math.max(max, curMax + same);
         }
-        
         return max;
     }
     
-    private double slope(Point a, Point b) {
+    
+    private double getSlope(Point a, Point b) {
         if (a.x == b.x) {
             return Double.MAX_VALUE;
         }
-        double y = (double)(a.y - b.y);
-        double x = (double)(a.x - b.x);
-        return y / x;
+        return (double)(a.y - b.y) / (double)(a.x - b.x);
     }
 }
