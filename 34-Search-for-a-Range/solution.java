@@ -1,50 +1,41 @@
 public class Solution {
     public int[] searchRange(int[] nums, int target) {
-        int left = -1;
-        int right = -1;
-        
-        int l = 0;
-        int r = nums.length - 1;
-        
-        while (l <= r) {
-            int m = (l + r) / 2;
-            if (nums[m] == target) {
-                if (m != 0 && nums[m - 1] == target) {
-                    r = m - 1;
-                } else {
-                    left = m;
-                    break;
-                }
-            } else if (nums[m] > target) {
-                r = m - 1;
-            } else {
-                l = m + 1;
-            }
-        }
-        
-        if (left == -1) {
-            return new int[]{-1, -1};
-        }
-        
-        l = 0;
-        r = nums.length - 1;
-        
-        while (l <= r) {
-            int m = (l + r) / 2;
-            if (nums[m] == target) {
-                if (m != nums.length - 1 && nums[m + 1] == target) {
-                    l = m + 1;
-                } else {
-                    right = m;
-                    break;
-                }
-            } else if (nums[m] > target) {
-                r = m - 1;
-            } else {
-                l = m + 1;
-            }
-        }        
-                
-        return new int[]{left, right};
+        return new int[]{left(nums, target, 0, nums.length - 1), right(nums, target, 0, nums.length - 1)};
     }
+    
+    private int left(int[] nums, int target, int l, int r) {
+        if (l > r) {
+            return -1;
+        }
+        int m = l + (r - l) / 2;
+        if (nums[m] == target) {
+            if (m == 0 || nums[m - 1] != target) {
+                return m;
+            } else {
+                return left(nums, target, l, m - 1);
+            }
+        } else if (nums[m] > target) {
+            return left(nums, target, l, m - 1);
+        } else {
+            return left(nums, target, m + 1, r);
+        }
+    }
+    
+    private int right(int[] nums, int target, int l, int r) {
+        if (l > r) {
+            return -1;
+        }        
+        int m = l + (r - l) / 2;
+        if (nums[m] == target) {
+            if (m == nums.length - 1 || nums[m + 1] != target) {
+                return m;
+            } else {
+                return right(nums, target, m + 1, r);
+            }
+        } else if (nums[m] > target) {
+            return right(nums, target, l, m - 1);
+        } else {
+            return right(nums, target, m + 1, r);
+        }        
+    }    
 }
