@@ -27,45 +27,48 @@
  * }
  */
 public class Solution {
-    public int depthSumInverse(List<NestedInteger> list) {
-        int sum = 0;
-        int max = Integer.MIN_VALUE;
-        
-        for (NestedInteger n : list) {
-            max = Math.max(max, getDepth(n, 1));
-        }        
-        
-        for (NestedInteger n : list) {
-            sum += dfs(n, max);
+    public int depthSumInverse(List<NestedInteger> nestedList) {
+        if (nestedList == null || nestedList.size() == 0) {
+            return 0;
         }
         
+        int depth = 0;
+        for (NestedInteger node : nestedList) {
+            depth = Math.max(depth, getDepth(node, 0));
+        }
+        
+        int sum = 0;
+        for (NestedInteger node : nestedList) {
+            sum += dfs(node, depth);
+        }        
         return sum;
     }
     
-    private int dfs(NestedInteger head, int depth) {
-        if (head.isInteger()) {
-            return head.getInteger() * depth;
+    private int dfs(NestedInteger root, int depth) {
+        if (root == null) {
+            return 0;
         }
-        
+        if (root.isInteger()) {
+            return root.getInteger() * depth;
+        }
         int sum = 0;
-        
-        for (NestedInteger n : head.getList()) {
-            sum += dfs(n, depth - 1);
-        }
-        
-        return sum;        
+        for (NestedInteger node : root.getList()) {
+            sum += dfs(node, depth - 1);
+        }        
+        return sum;
     }
     
-    private int getDepth(NestedInteger head, int depth) {
-        if (head.isInteger()) {
+    private int getDepth(NestedInteger root, int depth) {
+        if (root == null) {
             return depth;
         }
-        int max = Integer.MIN_VALUE;
-        
-        for (NestedInteger n : head.getList()) {
-            max = Math.max(max, getDepth(n, depth + 1));
+        if (root.isInteger()) {
+            return depth + 1;
         }
-        
+        int max = 0;
+        for (NestedInteger node : root.getList()) {
+            max = Math.max(max, getDepth(node, depth + 1));
+        }
         return max;
     }
 }
