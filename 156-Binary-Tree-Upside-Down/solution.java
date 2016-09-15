@@ -15,6 +15,8 @@ public class Solution {
         
         Stack<TreeNode> left = new Stack<>();
         Stack<TreeNode> right = new Stack<>();
+        right.push(null);
+        
         while (root != null) {
             left.push(root);
             if (root.left != null) {
@@ -25,16 +27,13 @@ public class Solution {
         
         TreeNode dummy = new TreeNode(-1);
         TreeNode next = dummy;
+        
         while (!left.isEmpty()) {
             next.right = left.pop();
-            if (right.isEmpty()) {
-                next.right.left = null;
-                next.right.right = null;                
-            } else {
-                next.right.left = right.pop();        
-            }
+            next.right.left = right.pop();
             next = next.right;
         }
+        next.right = null;
         
         return dummy.right;
     }
