@@ -8,9 +8,7 @@ public class Solution {
         int sum = nums[0];
         
         for (int i = 1; i < nums.length; i++) {
-            int n = nums[i];
-            n = Math.max(n, n + sum);
-            sum = n;
+            sum = Math.max(nums[i], nums[i] + sum);
             max = Math.max(max, sum);
         }
         
