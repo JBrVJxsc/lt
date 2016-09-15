@@ -1,25 +1,24 @@
 public class TwoSum {
 
-    private Map<Integer, Integer> map = new LinkedHashMap<>();
+    Map<Integer, Integer> map = new HashMap<>();
     
     // Add the number to an internal data structure.
-    public void add(int num) {
-        int n = map.getOrDefault(num, 0) + 1;
-        map.put(num, n);
+    public void add(int number) {
+        map.put(number, map.getOrDefault(number, 0) + 1);
     }
 
     // Find if there exists any pair of numbers which sum is equal to the value.
     public boolean find(int value) {
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            int num = entry.getKey();
-            int dif = value - num;
-            if (dif == num) {
-                int count = entry.getValue();
-                if (count > 1) {
+            int dif = value - entry.getKey();
+            if (dif == entry.getKey()) {
+                if (entry.getValue() > 1) {
                     return true;
                 }
-            } else if (map.get(dif) != null) {
-                return true;
+            } else {
+                if (map.get(dif) != null && map.get(dif) > 0) {
+                    return true;
+                }
             }
         }
         return false;
