@@ -9,17 +9,11 @@ public class Solution {
         int l = 0;
         int r = 0;
         while (r < s.length()) {
-            while (r < s.length() && map.size() < k) {
+            while (r < s.length() && (map.size() < k || map.size() == k && map.get(s.charAt(r)) != null)) {
                 char c = s.charAt(r++);                
                 int count = map.getOrDefault(c, 0) + 1;
                 map.put(c, count);
             }
-            
-            while (r < s.length() && map.size() == k && map.get(s.charAt(r)) != null) {
-                char c = s.charAt(r++);                
-                int count = map.getOrDefault(c, 0) + 1;
-                map.put(c, count);
-            }            
             
             max = Math.max(max, r - l);
             
