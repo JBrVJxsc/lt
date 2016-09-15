@@ -1,28 +1,22 @@
 public class Solution {
     public double myPow(double x, int n) {
-        boolean isPositive = n > 0;
-        n = Math.abs(n);
-        x = binary(x, n);
-        if (!isPositive) {
-            return 1 / x;
+        if (n < 0) {
+            return 1 / pow(x, n);
         }
-        return x;
+        return pow(x, n);
     }
     
-    private double binary(double x, int n) {
+    private double pow(double x, int n) {
         if (n == 0) {
             return 1;
         }
-        if (n == 1) {
-            return x;
-        }
         
-        double r = binary(x, n / 2);
-        r *= r;
+        double d = pow(x, n / 2);
+        d *= d;
         if (n % 2 != 0) {
-            r *= x;
+            d *= x;
         }
         
-        return r;
+        return d;
     }
 }
