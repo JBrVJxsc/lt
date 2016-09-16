@@ -1,18 +1,16 @@
 public class Solution {
-    public List<String> fullJustify(String[] words, int maxWidth) {
+    public List<String> fullJustify(String[] words, int max) {
         List<String> list = new ArrayList<>();
         if (words == null || words.length == 0) {
             return list;
         }
         
-        int i = 0;
         List<String> cur = new ArrayList<>();
         int curLen = 0;
-        
-        while (i < words.length) {
+        for (int i = 0; i < words.length; i++) {
             String str = words[i];
-            if (curLen + str.length() + cur.size() > maxWidth) {
-                str = justify(cur, curLen, maxWidth);
+            if (curLen + str.length() + cur.size() > max) {
+                str = justify(cur, curLen, max);
                 list.add(str);
                 cur = new ArrayList<>();
                 curLen = 0;
@@ -21,25 +19,22 @@ public class Solution {
                 cur.add(str);
                 curLen += str.length();
             }
-            i++;
         }
         
-        String str = justifyLast(cur, curLen, maxWidth);
+        String str = justifyLast(cur, curLen, max);
         list.add(str);
-        
         return list;
     }
     
     private String justify(List<String> list, int len, int max) {
         int remain = max - len;
         if (list.size() == 1) {
-            String str = list.get(0);
-            return padRight(str, remain);
+            return padRight(list.get(0), remain);
         } else {
             while (remain > 0) {
                 for (int i = 0; i < list.size() - 1 && remain-- > 0; i++) {
                     list.set(i, list.get(i) + " ");
-                }                
+                }
             }
             return merge(list);
         }
@@ -51,14 +46,13 @@ public class Solution {
             list.set(i, list.get(i) + " ");
             remain--;
         }
-        String str = padRight(list.get(list.size() - 1), remain);
-        list.set(list.size() - 1, str);
+        list.set(list.size() - 1, padRight(list.get(list.size() - 1), remain));
         return merge(list);
     }
     
-    private String padRight(String str, int len) {
+    private String padRight(String str, int num) {
         StringBuilder sb = new StringBuilder(str);
-        while (len-- > 0) {
+        while (num-- > 0) {
             sb.append(" ");
         }
         return sb.toString();
