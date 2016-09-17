@@ -10,40 +10,39 @@
 public class Codec {
 
     // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {        
+    public String serialize(TreeNode root) {
         StringBuilder sb = new StringBuilder();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        
         while (!queue.isEmpty()) {
             TreeNode node = queue.remove();
             if (node == null) {
-                sb.append('#');
-                sb.append('~');
-            } else {
-                sb.append(node.val);
-                sb.append('~');
-                queue.add(node.left);
-                queue.add(node.right);
+                sb.append("#");
+                if (!queue.isEmpty()) {
+                    sb.append("&");
+                }
+                continue;
             }
+            sb.append(node.val);
+            sb.append("&");
+            queue.add(node.left);
+            queue.add(node.right);
+            
         }
-        
         return sb.toString();
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        if (data.charAt(0) == '#') {
+        String[] strs = data.split("&");
+        if (strs[0].equals("#")) {
             return null;
         }
-        
-        String[] strs = data.split("~");
         TreeNode root = new TreeNode(Integer.valueOf(strs[0]));
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         int i = 1;
-        
-        while (!queue.isEmpty()) {
+        while (i < strs.length) {
             TreeNode node = queue.remove();
             String temp = strs[i++];
             if (!temp.equals("#")) {
@@ -56,7 +55,6 @@ public class Codec {
                 queue.add(node.right);
             }            
         }
-        
         return root;
     }
 }
