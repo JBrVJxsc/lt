@@ -7,16 +7,14 @@ public class Solution {
         int[] l = new int[nums.length];
         int[] r = new int[nums.length];
         
-        int pre = nums[0];
-        l[0] = 1;
-        for (int i = 1; i < nums.length; i++) {
+        int pre = 1;
+        for (int i = 0; i < nums.length; i++) {
             l[i] = pre;
             pre *= nums[i];
         }
         
-        pre = nums[nums.length - 1];
-        r[nums.length - 1] = 1;
-        for (int i = nums.length - 2; i >= 0; i--) {
+        pre = 1;
+        for (int i = nums.length - 1; i >= 0; i--) {
             r[i] = pre;
             pre *= nums[i];
         }
