@@ -4,12 +4,13 @@ public class Solution {
         if (n < 4) {
             return lists;
         }
+        
         List<Integer> factors = factors(n);
-        dfs(n, factors, lists, new ArrayList<>(), 1, 0);
+        dfs(lists, factors, new ArrayList<>(), 1, n, 0);
         return lists;
     }
-    
-    private void dfs(int n, List<Integer> factors, List<List<Integer>> lists, List<Integer> cur, int curProd, int index) {
+ 
+    private void dfs(List<List<Integer>> lists, List<Integer> factors, List<Integer> cur, int curProd, int n, int index) {
         if (curProd == n) {
             lists.add(new ArrayList<>(cur));
             return;
@@ -20,11 +21,12 @@ public class Solution {
             if (curProd > n / num) {
                 return;
             }
-            cur.add(num);
             curProd *= num;
-            dfs(n, factors, lists, cur, curProd, i);
+            cur.add(num);
+            dfs(lists, factors, cur, curProd, n, i);
             curProd /= num;
             cur.remove(cur.size() - 1);
+            
         }
     }
     
