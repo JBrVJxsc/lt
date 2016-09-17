@@ -3,17 +3,13 @@ public class Solution {
         if (nums == null || nums.length == 0) {
             return 0;
         }
-        
-        int pre = nums[0];
-        int prePre = 0;
-        int max = pre;
-        
-        for (int i = 1; i < nums.length; i++) {
-            max = Math.max(pre, nums[i] + prePre);
-            prePre = pre;
-            pre = max;
+        if (nums.length == 1) {
+            return nums[0];
         }
-        
-        return max;
+        nums[1] = Math.max(nums[1], nums[0]);
+        for (int i = 2; i < nums.length; i++) {
+            nums[i] = Math.max(nums[i - 1], nums[i] + nums[i - 2]);
+        }
+        return nums[nums.length - 1];
     }
 }
