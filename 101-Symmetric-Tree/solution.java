@@ -19,10 +19,9 @@ public class Solution {
         if (p == null && q == null) {
             return true;
         }
-        
         if (p == null || q == null || p.val != q.val) {
             return false;
         }
-        return isSymmetric(p.left, q.right) && isSymmetric(p.right, q.left);
+        return isSymmetric(p.left, q.right) && isSymmetric(q.left, p.right);
     }
 }
