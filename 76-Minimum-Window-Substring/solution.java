@@ -1,48 +1,50 @@
 public class Solution {
     public String minWindow(String s, String t) {
-        Map<Character, Integer> need = new HashMap<>();
-        Map<Character, Integer> find = new HashMap<>();
-        
-        for (char c : t.toCharArray()) {
-            int count = need.getOrDefault(c, 0) + 1;
-            need.put(c, count);
+        if (s == null || t == null || s.length() == 0 || t.length() == 0) {
+            return "";
         }
         
-        int count = 0;
+        Map<Character, Integer> needs = new HashMap<>();
+        Map<Character, Integer> found = new HashMap<>();
+        
+        for (char c : t.toCharArray()) {
+            int count = needs.getOrDefault(c, 0) + 1;
+            needs.put(c, count);
+        }
+        
         int l = 0;
         int r = 0;
         String min = "";
+        int count = 0;
         
         while (r < s.length()) {
-            while (r < s.length() && count != t.length()) {
+            while (r < s.length() && count < t.length()) {
                 char c = s.charAt(r++);
-                Integer num = need.get(c);
-                if (num != null) {
-                    int cur = find.getOrDefault(c, 0);
-                    if (cur < num) {
+                if (needs.get(c) != null) {
+                    int n = found.getOrDefault(c, 0);
+                    if (n < needs.get(c)) {
                         count++;
                     }
-                    find.put(c, cur + 1);
+                    found.put(c, n + 1);
                 }
             }
             
-            if (count != t.length()) {
+            if (count < t.length()) {
                 return min;
             }
             
             while (count == t.length()) {
                 char c = s.charAt(l++);
-                Integer num = need.get(c);
-                if (num != null) {
-                    int cur = find.get(c);
-                    if (cur == num) {
+                if (needs.get(c) != null) {
+                    int n = found.get(c);
+                    if (n == needs.get(c)) {
                         count--;
-                        String str = s.substring(l - 1, r);
-                        if (min.length() == 0 || str.length() < min.length()) {
-                            min = str;
+                        String sub = s.substring(l - 1, r);
+                        if (min.length() == 0 || min.length() > sub.length()) {
+                            min = sub;
                         }
                     }
-                    find.put(c, cur - 1);
+                    found.put(c, n - 1);
                 }                
             }
         }
