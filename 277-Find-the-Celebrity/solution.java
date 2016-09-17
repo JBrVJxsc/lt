@@ -3,10 +3,6 @@
 
 public class Solution extends Relation {
     public int findCelebrity(int n) {
-        if (n < 2) {
-            return n - 1;
-        }
-        
         int candidate = 0;
         for (int i = 1; i < n; i++) {
             if (knows(candidate, i)) {
@@ -15,10 +11,11 @@ public class Solution extends Relation {
         }
         
         for (int i = 0; i < n; i++) {
-            if (i != candidate) {
-                if (knows(candidate, i) || !knows(i, candidate)) {
-                    return -1;
-                }
+            if (i == candidate) {
+                continue;
+            }
+            if (knows(candidate, i) || !knows(i, candidate)) {
+                return -1;
             }
         }
         
