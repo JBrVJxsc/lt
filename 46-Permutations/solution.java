@@ -4,24 +4,25 @@ public class Solution {
         if (nums == null || nums.length == 0) {
             return lists;
         }
-        dfs(nums, new HashSet<>(), lists, new ArrayList<>());
+        dfs(lists, nums, new ArrayList<>(), new HashSet<>());
         return lists;
     }
-    
-    private void dfs(int[] nums, Set<Integer> set, List<List<Integer>> lists, List<Integer> cur) {
+  
+    private void dfs(List<List<Integer>> lists, int[] nums, List<Integer> cur, Set<Integer> set) {
         if (cur.size() == nums.length) {
             lists.add(new ArrayList<>(cur));
             return;
         }
         
         for (int i = 0; i < nums.length; i++) {
-            if (set.contains(i)) {
+            int n = nums[i];
+            if (set.contains(n)) {
                 continue;
             }
-            cur.add(nums[i]);
-            set.add(i);
-            dfs(nums, set, lists, cur);
-            set.remove(i);
+            cur.add(n);
+            set.add(n);
+            dfs(lists, nums, cur, set);
+            set.remove(n);
             cur.remove(cur.size() - 1);
         }
     }
