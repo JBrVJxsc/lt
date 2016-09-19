@@ -10,22 +10,21 @@
 public class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> lists = new ArrayList<>();
-        height(lists, root);
+        depth(lists, root);
         return lists;
     }
     
-    private int height(List<List<Integer>> list, TreeNode root) {
+    private int depth(List<List<Integer>> lists, TreeNode root) {
         if (root == null) {
-            return 0;
+            return -1;
         }
         
-        int h = Math.max(height(list, root.left), height(list, root.right));
-        
-        if (list.size() == h) {
-            list.add(new ArrayList<>());
+        int depth = depth(lists, root.left);
+        depth = Math.max(depth, depth(lists, root.right)) + 1;
+        if (lists.size() == depth) {
+            lists.add(new ArrayList<>());
         }
-        list.get(h).add(root.val);
-        
-        return h + 1;
+        lists.get(depth).add(root.val);
+        return depth;
     }
 }
