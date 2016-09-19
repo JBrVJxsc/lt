@@ -12,12 +12,8 @@ public class Solution {
         if (root == null) {
             return 0;
         }
-        if (root.left == null && root.right == null) {
-            return 1;
-        }
-        int depth = maxDepth(root.left);
-        depth = Math.max(depth, maxDepth(root.right));
-        
-        return depth + 1;
+        int max = maxDepth(root.left);
+        max = Math.max(max, maxDepth(root.right));
+        return max + 1;
     }
 }
