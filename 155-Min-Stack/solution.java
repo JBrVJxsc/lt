@@ -15,14 +15,10 @@ public class MinStack {
             min.push(x);
             size.push(stack.size());
         } else {
+            stack.push(x);
             if (x < min.peek()) {
-                stack.push(x);
                 min.push(x);
                 size.push(stack.size());
-            } else {
-                stack.push(x);
-                // size.pop();
-                // size.push(stack.size());
             }
         }
     }
