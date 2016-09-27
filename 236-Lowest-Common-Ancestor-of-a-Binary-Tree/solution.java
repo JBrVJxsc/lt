@@ -15,14 +15,11 @@ public class Solution {
         if (root == p || root == q) {
             return root;
         }
-        
         TreeNode l = lowestCommonAncestor(root.left, p, q);
         TreeNode r = lowestCommonAncestor(root.right, p, q);
-        
         if (l != null && r != null) {
             return root;
         }
-        
         return l == null ? r : l;
     }
 }
