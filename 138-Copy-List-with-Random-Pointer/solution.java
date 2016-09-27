@@ -30,6 +30,7 @@ public class Solution {
         
         RandomListNode dummy = new RandomListNode(-1);
         next = dummy;
+        
         while (head != null) {
             next.next = head.next;
             head.next = head.next.next;
