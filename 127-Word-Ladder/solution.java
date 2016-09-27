@@ -1,29 +1,24 @@
 public class Solution {
     public int ladderLength(String begin, String end, Set<String> words) {
-        if (begin == null || end == null || words == null || words.size() == 0) {
-            return 0;
-        }
+        Queue<String> queue = new LinkedList<>();
+        Map<String, Integer> map = new HashMap<>();
+        map.put(begin, 1);
+        queue.add(begin);
         words.add(end);
         
-        Map<String, Integer> map = new HashMap<>();
-        Queue<String> queue = new LinkedList<>();
-        queue.add(begin);
-        map.put(begin, 1);
-        
         while (!queue.isEmpty()) {
-            String node = queue.remove();
-            int depth = map.get(node);
-            if (node.equals(end)) {
-                return depth;
+            String str = queue.remove();
+            if (str.equals(end)) {
+                return map.get(str);
             }
-            for (int i = 0; i < node.length(); i++) {
-                char[] chars = node.toCharArray();
-                for (char c = 'a'; c <= 'z'; c++) {
-                    chars[i] = c;
+            for (int i = 0; i < str.length(); i++) {
+                char[] chars = str.toCharArray();
+                for (char j = 'a'; j <= 'z'; j++) {
+                    chars[i] = j;
                     String temp = String.valueOf(chars);
                     if (map.get(temp) == null && words.contains(temp)) {
+                        map.put(temp, map.get(str) + 1);
                         queue.add(temp);
-                        map.put(temp, depth + 1);
                     }
                 }
             }
