@@ -4,34 +4,33 @@ public class Solution {
             return s;
         }
         
-        int len = s.length();        
+        int len = s.length();
         boolean[][] map = new boolean[len][len];
-        int max = 1;
-        int start = 0;
+        int l = 0;
+        int r = 0;
         
         for (int i = 0; i < len; i++) {
             map[i][i] = true;
-            max = Math.max(max, 1);                         
         }
         
         for (int i = 0; i < len - 1; i++) {
             if (s.charAt(i) == s.charAt(i + 1)) {
-                map[i][i + 1] = true;
-                max = Math.max(max, 2);
-                start = i;
+                l = i;
+                r = i + 1;
+                map[l][r] = true;
             }
         }
         
         for (int i = 3; i <= len; i++) {
             for (int j = 0; j <= len - i; j++) {
                 if (s.charAt(j) == s.charAt(j + i - 1) && map[j + 1][j + i - 2]) {
-                    map[j][j + i - 1] = true;
-                    max = Math.max(max, i);
-                    start = j;
+                    l = j;
+                    r = j + i - 1;
+                    map[l][r] = true;
                 }
             }
         }
         
-        return s.substring(start, start + max);
+        return s.substring(l, r + 1);
     }
 }
