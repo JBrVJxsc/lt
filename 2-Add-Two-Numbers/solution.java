@@ -17,22 +17,21 @@ public class Solution {
         
         ListNode dummy = new ListNode(-1);
         ListNode next = dummy;
-        int remain = 0;
         
+        int remain = 0;
         while (l1 != null || l2 != null) {
+            remain += l1 == null ? 0 : l1.val;
+            remain += l2 == null ? 0 : l2.val;
             if (l1 != null) {
-                remain += l1.val;
                 l1 = l1.next;
             }
             if (l2 != null) {
-                remain += l2.val;
                 l2 = l2.next;
-            }
+            }          
             next.next = new ListNode(remain % 10);
             remain /= 10;
             next = next.next;
         }
-        
         if (remain == 1) {
             next.next = new ListNode(1);
         }
