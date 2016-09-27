@@ -14,7 +14,6 @@ public class Solution {
         
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-        
         while (head.next != null) {
             ListNode next = head.next;
             head.next = head.next.next;
