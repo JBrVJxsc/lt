@@ -12,28 +12,13 @@ public class Solution {
         return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
     
-    private boolean dfs(TreeNode node, long lo, long hi) {
+    private boolean dfs(TreeNode node, long min, long max) {
         if (node == null) {
             return true;
         }
-        if (node.left != null) {
-            if (node.val <= node.left.val) {
-                return false;
-            }
-        }
-        if (node.right != null) {
-            if (node.val >= node.right.val) {
-                return false;
-            }
-        }
-        if (node.val <= lo || node.val >= hi) {
+        if (node.val <= min || node.val >= max) {
             return false;
         }
-        return dfs(node.left, lo, node.val) && dfs(node.right, node.val, hi);
+        return dfs(node.left, min, node.val) && dfs(node.right, node.val, max);
     }
-    
 }
-
-// 1. Check if the value of the node is > left.val && < right.val;
-// 2. Check if the value of the node is in the boundery.
-
