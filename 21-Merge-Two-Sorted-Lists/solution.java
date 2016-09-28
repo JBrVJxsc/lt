@@ -25,12 +25,12 @@ public class Solution {
             } else if (l2 == null) {
                 next.next = l1;
                 l1 = l1.next;
-            } else if (l1.val < l2.val) {
+            } else if (l1.val > l2.val) {
+                next.next = l2;
+                l2 = l2.next;
+            } else {
                 next.next = l1;
                 l1 = l1.next;
-            } else {
-                next.next = l2;
-                l2 = l2.next;                
             }
             next.next.next = null;
             next = next.next;
