@@ -2,15 +2,13 @@ public class Solution {
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> lists = new ArrayList<>();
         lists.add(new ArrayList<>());
-        
         if (nums == null || nums.length == 0) {
             return lists;
         }
-        
+        Arrays.sort(nums);
         for (int i = 1; i <= nums.length; i++) {
             dfs(lists, new ArrayList<>(), i, 0, nums);
         }
-        
         return lists;
     }
     
@@ -19,11 +17,6 @@ public class Solution {
             lists.add(new ArrayList<>(cur));
             return;
         }
-        
-        if (index == nums.length) {
-            return;
-        }        
-        
         for (int i = index; i < nums.length; i++) {
             cur.add(nums[i]);
             dfs(lists, cur, len, i + 1, nums);
