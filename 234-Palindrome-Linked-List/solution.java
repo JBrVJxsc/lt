@@ -19,10 +19,12 @@ public class Solution {
             next = next.next;
         }
         
-        int mid = len - len / 2;
+        int mid = len % 2 == 0 ? len / 2 : len / 2 + 1;
         next = head;
+        len = 0;
         
-        while (mid-- > 0) {
+        while (len < mid) {
+            len++;
             next = next.next;
         }
         
@@ -38,17 +40,17 @@ public class Solution {
         return true;
     }
     
-    private ListNode reverse(ListNode head) {
-        if (head == null) {
-            return head;
+    private ListNode reverse(ListNode node) {
+        if (node == null || node.next == null) {
+            return node;
         }
         
         ListNode dummy = new ListNode(-1);
-        dummy.next = head;
+        dummy.next = node;
         
-        while (head.next != null) {
-            ListNode next = head.next;
-            head.next = head.next.next;
+        while (node.next != null) {
+            ListNode next = node.next;
+            node.next = node.next.next;
             next.next = dummy.next;
             dummy.next = next;
         }
