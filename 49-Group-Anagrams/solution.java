@@ -4,14 +4,16 @@ public class Solution {
         if (strs == null || strs.length == 0) {
             return lists;
         }
-        Map<String, List<String>> map = new HashMap<>();            
+        Map<String, List<String>> map = new HashMap<>();
         
         for (String str : strs) {
-            String cvt = convert(str);
-            List<String> list = map.get(cvt);
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String temp = String.valueOf(chars);
+            List<String> list = map.get(temp);
             if (list == null) {
                 list = new ArrayList<>();
-                map.put(cvt, list);
+                map.put(temp, list);
             }
             list.add(str);
         }
@@ -21,11 +23,5 @@ public class Solution {
         }
         
         return lists;
-    }
-    
-    private String convert(String str) {
-        char[] chars = str.toCharArray();
-        Arrays.sort(chars);
-        return String.valueOf(chars);
     }
 }
