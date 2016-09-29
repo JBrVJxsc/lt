@@ -1,9 +1,9 @@
 public class RandomizedSet {
 
+    List<Integer> nums = new ArrayList<>();
     Map<Integer, Integer> map = new HashMap<>();
-    List<Integer> list = new ArrayList<>();
     Random random = new Random();
-
+    
     /** Initialize your data structure here. */
     public RandomizedSet() {
         
@@ -14,28 +14,30 @@ public class RandomizedSet {
         if (map.get(val) != null) {
             return false;
         }
-        list.add(val);
-        map.put(val, list.size() - 1);
+        map.put(val, nums.size());
+        nums.add(val);
         return true;
     }
     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
-        if (map.get(val) == null) {
+        Integer index = map.get(val);
+        if (index == null) {
             return false;
-        }        
-        int index = map.get(val);
-        int last = list.get(list.size() - 1);
-        map.put(last, index);
-        list.set(index, last);
-        list.remove(list.size() - 1);
+        }
+        if (index != nums.size() - 1) {
+            int num = nums.get(nums.size() - 1);
+            nums.set(index, num);
+            map.put(num, index);
+        }
         map.remove(val);
+        nums.remove(nums.size() - 1);
         return true;
     }
     
     /** Get a random element from the set. */
     public int getRandom() {
-        return list.get(random.nextInt(list.size()));
+        return nums.get(random.nextInt(nums.size()));
     }
 }
 
