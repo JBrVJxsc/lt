@@ -14,14 +14,14 @@ public class Solution {
         return list;
     }
     
-    private void dfs(List<Integer> list, TreeNode root, int depth) {
-        if (root == null) {
+    private void dfs(List<Integer> list, TreeNode node, int depth) {
+        if (node == null) {
             return;
         }
         if (list.size() == depth) {
-            list.add(root.val);
+            list.add(node.val);
         }
-        dfs(list, root.right, depth + 1);
-        dfs(list, root.left, depth + 1);
+        dfs(list, node.right, depth + 1);
+        dfs(list, node.left, depth + 1);
     }
 }
