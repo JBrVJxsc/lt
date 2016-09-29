@@ -14,15 +14,15 @@ public class Solution {
         return lists;
     }
     
-    private void dfs(List<List<Integer>> lists, TreeNode root, int depth) {
-        if (root == null) {
+    private void dfs(List<List<Integer>> lists, TreeNode node, int depth) {
+        if (node == null) {
             return;
         }
-        if (depth == lists.size()) {
+        if (lists.size() == depth) {
             lists.add(new ArrayList<>());
         }
-        lists.get(depth).add(root.val);
-        dfs(lists, root.left, depth + 1);
-        dfs(lists, root.right, depth + 1);
+        lists.get(depth).add(node.val);
+        dfs(lists, node.left, depth + 1);
+        dfs(lists, node.right, depth + 1);
     }
 }
