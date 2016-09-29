@@ -4,17 +4,13 @@ public class Solution {
         
         for (int i = 0; i < s.length(); i++) {
             int pos = s.charAt(i) - 'a';
-            if (map[pos] == 0) {
-                map[pos] = i + 1;
-            } else {
-                map[pos] = -1;
-            }
+            map[pos]++;
         }
         
         for (int i = 0; i < s.length(); i++) {
             int pos = s.charAt(i) - 'a';
-            if (map[pos] > 0) {
-                return map[pos] - 1;
+            if (map[pos] == 1) {
+                return i;
             }
         }
         
