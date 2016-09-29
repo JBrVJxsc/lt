@@ -1,17 +1,29 @@
 public class Solution {
     public int countPrimes(int n) {
-        boolean[] notPrime = new boolean[n];
-        int count = 0;
+        if (n < 2) {
+            return 0;
+        }
+        boolean[] map = new boolean[n];
+        map[0] = true;
+        map[1] = true;
         
-        for (int i = 2; i < n; i++) {
-            if (notPrime[i] == false) {
-                count++;
-                for (int j = 2; i * j < n; j++) {
-                    notPrime[i * j] = true;
-                }
+        int i = 2;
+        while (i < n) {
+            while (i < n && map[i] == true) {
+                i++;
             }
+            for (int j = 2; i * j < n; j++) {
+                map[i * j] = true;
+            }
+            i++;
         }
         
+        int count = 0;
+        for (boolean b : map) {
+            if (!b) {
+                count++;
+            }
+        }
         return count;
     }
 }
