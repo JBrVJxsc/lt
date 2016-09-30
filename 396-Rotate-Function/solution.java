@@ -4,19 +4,18 @@ public class Solution {
             return 0;
         }
         
-        int max = Integer.MIN_VALUE;
-        
+        int sum = 0;
+        int rotation = 0;
         for (int i = 0; i < A.length; i++) {
-            int sum = 0;
-            int index = i;
-            for (int j = 0; j < A.length; j++) {
-                sum += j * A[index];
-                index++;
-                if (index == A.length) {
-                    index = 0;
-                }
-            }
-            max = Math.max(max, sum);
+            sum += A[i];
+            rotation += i * A[i];
+        }
+        
+        int max = rotation;
+        
+        for (int i = 1; i < A.length; i++) {
+            rotation = rotation + A.length * A[i - 1] - sum;
+            max = Math.max(max, rotation);
         }
         
         return max;
