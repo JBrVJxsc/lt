@@ -1,28 +1,29 @@
 public class Solution {
     public void reverseWords(char[] s) {
-        if (s == null || s.length < 2) {
-            return;
-        }
         reverse(s, 0, s.length - 1);
         int l = 0;
-        for (int i = 0; i < s.length; i++) {
-            if (s[i] == ' ') {
-                reverse(s, l, i - 1);
-                l = i + 1;
+        int r = 0;
+        while (r < s.length) {
+            while (r < s.length - 1 && s[r + 1] != ' ') {
+                r++;
             }
-        }
-        reverse(s, l, s.length - 1);
-    }
-  
-    private void reverse(char[] chars, int l, int r) {
-        while (l < r) {
-            swap(chars, l++, r--);
+            if (r < s.length) {
+                reverse(s, l, r);
+                r += 2;
+                l = r;
+            }
         }
     }
     
-    private void swap(char[] chars, int a, int b) {
-        char temp = chars[a];
-        chars[a] = chars[b];
-        chars[b] = temp;
+    private void reverse(char[] s, int l, int r) {
+        while (l < r) {
+            swap(s, l++, r--);
+        }
+    }
+    
+    private void swap(char[] s, int a, int b) {
+        char temp = s[a];
+        s[a] = s[b];
+        s[b] = temp;
     }
 }
