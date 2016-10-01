@@ -1,26 +1,25 @@
 public class Solution {
-        public List<List<String>> findLadders(String start, String end,
-                                              Set<String> dict) {
-            List<List<String>> ladders = new ArrayList<>();
+        public List<List<String>> findLadders(String begin, String end, Set<String> words) {
             Map<String, List<String>> map = new HashMap<>();
-            Map<String, Integer> distance = new HashMap<>();
+            Map<String, Integer> depth = new HashMap<>();
+            words.add(begin);
+            words.add(end);
+            bfs(map, depth, begin, words);
 
-            dict.add(start);
-            dict.add(end);
-
-            bfs(map, distance, start, dict);
-
-            List<String> path = new ArrayList<>();
-
-            dfs(ladders, path, start, end, distance, map);
-
-            return ladders;
+            List<List<String>> lists = new ArrayList<>();
+            List<String> list = new ArrayList<>();
+            list.add(begin);
+            dfs(lists, list, end, map, depth, new ArrayList<>(), 0);
+            return lists;
         }
 
-        void bfs(Map<String, List<String>> map, Map<String, Integer> depth, String begin, Set<String> words) {
+        private void bfs(Map<String, List<String>> map, Map<String, Integer> depth, String begin, Set<String> words) {
             Queue<String> queue = new LinkedList<>();
             queue.add(begin);
             depth.put(begin, 0);
+            for (String str : words) {
+                map.put(str, new ArrayList<>());
+            }
 
             while (!queue.isEmpty()) {
                 String str = queue.remove();
@@ -30,9 +29,6 @@ public class Solution {
                         chars[i] = c;
                         String temp = String.valueOf(chars);
                         if (!temp.equals(str) && words.contains(temp)) {
-                            if (map.get(str) == null) {
-                                map.put(str, new ArrayList<>());
-                            }
                             map.get(str).add(temp);
                             if (depth.get(temp) == null) {
                                 depth.put(temp, depth.get(str) + 1);
@@ -44,19 +40,17 @@ public class Solution {
             }
         }
 
-        void dfs(List<List<String>> ladders, List<String> path, String current, String end, Map<String, Integer> distance, Map<String, List<String>> map) {
-            path.add(current);
-            if (current.equals(end)) {
-                ladders.add(new ArrayList<>(path));
-            } else {
-                if (map.get(current) != null) {
-                    for (String next : map.get(current)) {
-                        if (distance.get(current) == distance.get(next) - 1) {
-                            dfs(ladders, path, next, end, distance, map);
-                        }
-                    }
+        private void dfs(List<List<String>> lists, List<String> list, String end, Map<String, List<String>> map, Map<String, Integer> depth, List<String> cur, int index) {
+            if (cur.size() != 0 && cur.get(cur.size() - 1).equals(end)) {
+                lists.add(new ArrayList<>(cur));
+                return;
+            }
+            for (String str : list) {
+                if (depth.get(str) == index) {
+                    cur.add(str);
+                    dfs(lists, map.get(str), end, map, depth, cur, index + 1);
+                    cur.remove(cur.size() - 1);
                 }
             }
-            path.remove(path.size() - 1);
         }
 }
