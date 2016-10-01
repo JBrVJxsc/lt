@@ -12,7 +12,7 @@ public class Solution {
 
             List<String> path = new ArrayList<>();
 
-            dfs(ladders, path, end, start, distance, map);
+            dfs(ladders, path, start, end, distance, map);
 
             return ladders;
         }
@@ -60,12 +60,12 @@ public class Solution {
         void dfs(List<List<String>> ladders, List<String> path, String crt, String start, Map<String, Integer> distance, Map<String, List<String>> map) {
             path.add(crt);
             if (crt.equals(start)) {
-                Collections.reverse(path);
+//                Collections.reverse(path);
                 ladders.add(new ArrayList<>(path));
-                Collections.reverse(path);
+//                Collections.reverse(path);
             } else {
                 for (String next : map.get(crt)) {
-                    if (distance.get(crt) == distance.get(next) + 1) {
+                    if (distance.get(crt) == distance.get(next) - 1) {
                         dfs(ladders, path, next, start, distance, map);
                     }
                 }
