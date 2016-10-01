@@ -45,9 +45,9 @@ public class Solution {
             for (int i = 0; i < str.length(); i++) {
                 char[] chars = str.toCharArray();
                 for (char c = 'a'; c <= 'z'; c++) {
-                    if (chars[i] == c) {
-                        continue;
-                    }
+                    // if (chars[i] == c) {
+                    //     continue;
+                    // }
                     chars[i] = c;
                     String expanded = String.valueOf(chars);
                     if (dict.contains(expanded)) {
