@@ -39,17 +39,19 @@ public class Solution {
             }
         }
 
-        List<String> expand(String crt, Set<String> dict) {
+        List<String> expand(String str, Set<String> dict) {
             List<String> expansion = new ArrayList<>();
 
-            for (int i = 0; i < crt.length(); i++) {
-                for (char ch = 'a'; ch <= 'z'; ch++) {
-                    if (ch != crt.charAt(i)) {
-                        String expanded = crt.substring(0, i) + ch
-                                + crt.substring(i + 1);
-                        if (dict.contains(expanded)) {
-                            expansion.add(expanded);
-                        }
+            for (int i = 0; i < str.length(); i++) {
+                char[] chars = str.toCharArray();
+                for (char c = 'a'; c <= 'z'; c++) {
+                    if (chars[i] == c) {
+                        continue;
+                    }
+                    chars[i] = c;
+                    String expanded = String.valueOf(chars);
+                    if (dict.contains(expanded)) {
+                        expansion.add(expanded);
                     }
                 }
             }
@@ -57,16 +59,14 @@ public class Solution {
             return expansion;
         }
 
-        void dfs(List<List<String>> ladders, List<String> path, String crt, String start, Map<String, Integer> distance, Map<String, List<String>> map) {
-            path.add(crt);
-            if (crt.equals(start)) {
-//                Collections.reverse(path);
+        void dfs(List<List<String>> ladders, List<String> path, String current, String end, Map<String, Integer> distance, Map<String, List<String>> map) {
+            path.add(current);
+            if (current.equals(end)) {
                 ladders.add(new ArrayList<>(path));
-//                Collections.reverse(path);
             } else {
-                for (String next : map.get(crt)) {
-                    if (distance.get(crt) == distance.get(next) - 1) {
-                        dfs(ladders, path, next, start, distance, map);
+                for (String next : map.get(current)) {
+                    if (distance.get(current) == distance.get(next) - 1) {
+                        dfs(ladders, path, next, end, distance, map);
                     }
                 }
             }
