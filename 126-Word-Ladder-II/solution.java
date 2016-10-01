@@ -17,46 +17,31 @@ public class Solution {
             return ladders;
         }
 
-        void bfs(Map<String, List<String>> map, Map<String, Integer> distance, String start, Set<String> dict) {
-            Queue<String> q = new LinkedList<>();
-            q.offer(start);
-            distance.put(start, 0);
-            for (String s : dict) {
-                map.put(s, new ArrayList<>());
-            }
+        void bfs(Map<String, List<String>> map, Map<String, Integer> depth, String begin, Set<String> words) {
+            Queue<String> queue = new LinkedList<>();
+            queue.add(begin);
+            depth.put(begin, 0);
 
-            while (!q.isEmpty()) {
-                String crt = q.poll();
-
-                List<String> nextList = expand(crt, dict);
-                for (String next : nextList) {
-                    map.get(next).add(crt);
-                    if (!distance.containsKey(next)) {
-                        distance.put(next, distance.get(crt) + 1);
-                        q.offer(next);
+            while (!queue.isEmpty()) {
+                String str = queue.remove();
+                for (int i = 0; i < str.length(); i++) {
+                    char[] chars = str.toCharArray();
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        chars[i] = c;
+                        String temp = String.valueOf(chars);
+                        if (!temp.equals(str) && words.contains(temp)) {
+                            if (map.get(str) == null) {
+                                map.put(str, new ArrayList<>());
+                            }
+                            map.get(str).add(temp);
+                            if (depth.get(temp) == null) {
+                                depth.put(temp, depth.get(str) + 1);
+                                queue.add(temp);
+                            }
+                        }
                     }
                 }
             }
-        }
-
-        List<String> expand(String str, Set<String> dict) {
-            List<String> expansion = new ArrayList<>();
-
-            for (int i = 0; i < str.length(); i++) {
-                char[] chars = str.toCharArray();
-                for (char c = 'a'; c <= 'z'; c++) {
-                    // if (chars[i] == c) {
-                    //     continue;
-                    // }
-                    chars[i] = c;
-                    String expanded = String.valueOf(chars);
-                    if (dict.contains(expanded)) {
-                        expansion.add(expanded);
-                    }
-                }
-            }
-
-            return expansion;
         }
 
         void dfs(List<List<String>> ladders, List<String> path, String current, String end, Map<String, Integer> distance, Map<String, List<String>> map) {
@@ -64,9 +49,11 @@ public class Solution {
             if (current.equals(end)) {
                 ladders.add(new ArrayList<>(path));
             } else {
-                for (String next : map.get(current)) {
-                    if (distance.get(current) == distance.get(next) - 1) {
-                        dfs(ladders, path, next, end, distance, map);
+                if (map.get(current) != null) {
+                    for (String next : map.get(current)) {
+                        if (distance.get(current) == distance.get(next) - 1) {
+                            dfs(ladders, path, next, end, distance, map);
+                        }
                     }
                 }
             }
