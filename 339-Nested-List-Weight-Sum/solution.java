@@ -16,26 +16,26 @@
  * }
  */
 public class Solution {
-    public int depthSum(List<NestedInteger> nestedList) {
-        if (nestedList == null) {
+    public int depthSum(List<NestedInteger> lists) {
+        if (lists == null) {
             return 0;
         }
-        
         int sum = 0;
-        for (NestedInteger node : nestedList) {
-            sum += dfs(node, 1);
-        }        
+        
+        for (NestedInteger list : lists) {
+            sum += dfs(list, 1);
+        }
+        
         return sum;
     }
     
-    private int dfs(NestedInteger root, int depth) {
-        if (root.isInteger()) {
-            return root.getInteger() * depth;
+    private int dfs(NestedInteger list, int depth) {
+        if (list.isInteger()) {
+            return list.getInteger() * depth;
         }
-        
         int sum = 0;
-        for (NestedInteger node : root.getList()) {
-            sum += dfs(node, depth + 1);
+        for (NestedInteger l : list.getList()) {
+            sum += dfs(l, depth + 1);
         }
         return sum;
     }
