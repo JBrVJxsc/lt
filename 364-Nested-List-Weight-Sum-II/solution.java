@@ -51,11 +51,9 @@ public class Solution {
         }
         
         int max = depth;
-        
         for (NestedInteger item : ni.getList()) {
             max = Math.max(max, getMaxDepth(item, depth + 1));
         }
-        
         return max;
     }
     
@@ -65,11 +63,9 @@ public class Solution {
         }
         
         int sum = 0;
-        
         for (NestedInteger item : ni.getList()) {
             sum += dfs(item, depth - 1);
         }        
-        
         return sum;
     }
 }
