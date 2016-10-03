@@ -28,47 +28,48 @@
  */
 public class Solution {
     public int depthSumInverse(List<NestedInteger> nestedList) {
-        if (nestedList == null || nestedList.size() == 0) {
+        if (nestedList == null) {
             return 0;
         }
         
-        int depth = 0;
-        for (NestedInteger node : nestedList) {
-            depth = Math.max(depth, getDepth(node, 0));
+        int max = 0;
+        for (NestedInteger item : nestedList) {
+            max = Math.max(max, getMaxDepth(item, 1));
         }
         
         int sum = 0;
-        for (NestedInteger node : nestedList) {
-            sum += dfs(node, depth);
+        for (NestedInteger item : nestedList) {
+            sum += dfs(item, max);
         }        
+        
         return sum;
     }
     
-    private int dfs(NestedInteger root, int depth) {
-        if (root == null) {
-            return 0;
-        }
-        if (root.isInteger()) {
-            return root.getInteger() * depth;
-        }
-        int sum = 0;
-        for (NestedInteger node : root.getList()) {
-            sum += dfs(node, depth - 1);
-        }        
-        return sum;
-    }
-    
-    private int getDepth(NestedInteger root, int depth) {
-        if (root == null) {
+    private int getMaxDepth(NestedInteger ni, int depth) {
+        if (ni.isInteger()) {
             return depth;
         }
-        if (root.isInteger()) {
-            return depth + 1;
+        
+        int max = depth;
+        
+        for (NestedInteger item : ni.getList()) {
+            max = Math.max(max, getMaxDepth(item, depth + 1));
         }
-        int max = 0;
-        for (NestedInteger node : root.getList()) {
-            max = Math.max(max, getDepth(node, depth + 1));
-        }
+        
         return max;
+    }
+    
+    private int dfs(NestedInteger ni, int depth) {
+        if (ni.isInteger()) {
+            return ni.getInteger() * depth;
+        }
+        
+        int sum = 0;
+        
+        for (NestedInteger item : ni.getList()) {
+            sum += dfs(item, depth - 1);
+        }        
+        
+        return sum;
     }
 }
