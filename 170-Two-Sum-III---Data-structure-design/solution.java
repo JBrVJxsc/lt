@@ -4,7 +4,8 @@ public class TwoSum {
     
     // Add the number to an internal data structure.
     public void add(int number) {
-        map.put(number, map.getOrDefault(number, 0) + 1);
+        int count = map.getOrDefault(number, 0) + 1;
+        map.put(number, count);
     }
 
     // Find if there exists any pair of numbers which sum is equal to the value.
@@ -15,10 +16,8 @@ public class TwoSum {
                 if (entry.getValue() > 1) {
                     return true;
                 }
-            } else {
-                if (map.get(dif) != null && map.get(dif) > 0) {
-                    return true;
-                }
+            } else if (map.get(dif) != null) {
+                return true;
             }
         }
         return false;
