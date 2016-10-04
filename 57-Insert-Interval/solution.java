@@ -10,10 +10,10 @@
 public class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
         List<Interval> result = new ArrayList<>();
-        if (intervals == null || intervals.size() == 0) {
-            result.add(newInterval);
-            return result;
-        }
+        // if (intervals == null || intervals.size() == 0) {
+        //     result.add(newInterval);
+        //     return result;
+        // }
         
         for (int i = 0; i < intervals.size(); i++) {
             Interval cur = intervals.get(i);
