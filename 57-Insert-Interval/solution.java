@@ -9,30 +9,43 @@
  */
 public class Solution {
     public List<Interval> insert(List<Interval> intervals, Interval newInterval) {
-        List<Interval> list = new ArrayList<>();
+        List<Interval> result = new ArrayList<>();
         if (intervals == null || intervals.size() == 0) {
-            list.add(newInterval);
-            return list;
+            result.add(newInterval);
+            return result;
         }
         
-        int i = 0;
-        while (i < intervals.size() && newInterval.start > intervals.get(i).start) {
-            i++;
-        }
-        intervals.add(i, newInterval);
-        
-        list.add(intervals.get(0));
-        for (i = 1; i < intervals.size(); i++) {
-            Interval pre = list.get(list.size() - 1);
+        for (int i = 0; i < intervals.size(); i++) {
             Interval cur = intervals.get(i);
-            if (cur.start > pre.end) {
-                list.add(cur);
-            } else if (cur.end <= pre.end) {
-                continue;
+            if (newInterval != null) {
+                if (newInterval.start > cur.end) {
+                    result.add(cur);
+                } else if (newInterval.end < cur.start) {
+                    result.add(newInterval);
+                    newInterval = null;
+                    i--;
+                } else {
+                    cur.start = Math.min(cur.start, newInterval.start);
+                    cur.end = Math.max(cur.end, newInterval.end);
+                    result.add(cur);
+                    newInterval = null;
+                }
             } else {
-                pre.end = cur.end;
+                Interval pre = result.get(result.size() - 1);
+                if (cur.start > pre.end) {
+                    result.add(cur);
+                } else if (cur.end <= pre.end) {
+                    continue;
+                } else {
+                    pre.end = cur.end;
+                }
             }
         }
-        return list;
+        
+        if (newInterval != null) {
+            result.add(newInterval);
+        }
+        
+        return result;
     }
 }
