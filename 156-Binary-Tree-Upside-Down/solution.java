@@ -9,31 +9,27 @@
  */
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
-        if (root == null || root.left == null && root.right == null) {
+        if (root == null || root.left == null) {
             return root;
         }
         
-        Stack<TreeNode> l = new Stack<>();
-        Stack<TreeNode> r = new Stack<>();
+        TreeNode pre = root;
+        TreeNode preRight = root.right;
+        TreeNode cur = root.left;
         
-        while (root != null) {
-            l.push(root);
-            r.push(root.right);
-            root = root.left;
-        }
-        r.pop();
-        
-        root = l.pop();
-        TreeNode next = root;
-        
-        while (!l.isEmpty()) {
-            next.left = r.pop();
-            next.right = l.pop();
-            next = next.right;
-            next.left = null;
-            next.right = null;
+        while (cur != null) {
+            TreeNode temp = cur.left;
+            cur.left = preRight;
+            preRight = cur.right;
+            cur.right = pre;
+            if (pre == root) {
+                pre.left = null;
+                pre.right = null;
+            }
+            pre = cur;
+            cur = temp;
         }
         
-        return root;
+        return pre;
     }
 }
