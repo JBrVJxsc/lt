@@ -13,37 +13,39 @@ public class Solution {
             return 0;
         }
         
-        Map<Double, Integer> map = null;
         int max = 1;
+        
         for (int i = 0; i < points.length; i++) {
-            map = new HashMap<>();
+            Map<Double, Integer> map = new HashMap<>();
             int same = 0;
             int curMax = 1;
             for (int j = 0; j < points.length; j++) {
                 if (i == j) {
                     continue;
                 }
-                Point p1 = points[i];
-                Point p2 = points[j];
-                if (p1.y == p2.y && p1.x == p2.x) {
+                if (isSame(points[i], points[j])) {
                     same++;
                     continue;
                 }
-                double slope = getSlope(p1, p2);
-                Integer count = map.getOrDefault(slope, 1) + 1;
+                double slope = getSlope(points[i], points[j]);
+                int count = map.getOrDefault(slope, 1) + 1;
                 map.put(slope, count);
                 curMax = Math.max(curMax, count);
             }
             max = Math.max(max, curMax + same);
         }
+        
         return max;
     }
     
-    
-    private double getSlope(Point a, Point b) {
-        if (a.x == b.x) {
-            return Double.MAX_VALUE;
+    private double getSlope(Point p1, Point p2) {
+        if (p1.x == p2.x) {
+            return Integer.MAX_VALUE;
         }
-        return (double)(a.y - b.y) / (double)(a.x - b.x);
+        return (double)(p1.y - p2.y) / (p1.x - p2.x);
+    }
+    
+    private boolean isSame(Point p1, Point p2) {
+        return p1.x == p2.x && p1.y == p2.y;
     }
 }
