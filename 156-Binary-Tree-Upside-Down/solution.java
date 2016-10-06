@@ -16,16 +16,14 @@ public class Solution {
         TreeNode pre = root;
         TreeNode preRight = root.right;
         TreeNode cur = root.left;
+        root.left = null;
+        root.right = null;
         
         while (cur != null) {
             TreeNode temp = cur.left;
             cur.left = preRight;
             preRight = cur.right;
             cur.right = pre;
-            if (pre == root) {
-                pre.left = null;
-                pre.right = null;
-            }
             pre = cur;
             cur = temp;
         }
