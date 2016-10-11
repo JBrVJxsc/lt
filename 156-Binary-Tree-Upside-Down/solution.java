@@ -9,23 +9,23 @@
  */
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
-        if (root == null || root.left == null) {
+        if (root == null || root.left == null && root.right == null) {
             return root;
         }
         
         TreeNode pre = root;
-        TreeNode preRight = root.right;
         TreeNode cur = root.left;
+        TreeNode preRight = root.right;
         root.left = null;
         root.right = null;
         
         while (cur != null) {
-            TreeNode temp = cur.left;
+            TreeNode next = cur.left;
             cur.left = preRight;
             preRight = cur.right;
             cur.right = pre;
             pre = cur;
-            cur = temp;
+            cur = next;
         }
         
         return pre;
