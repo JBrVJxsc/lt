@@ -16,13 +16,9 @@ public class Solution {
         
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (!isValid(c)) {
-                return false;
-            }
             if (isDigit(c)) {
                 numOfDigit++;
-            }
-            if (isDot(c)) {
+            } else if (isDot(c)) {
                 numOfDot++;
                 if (numOfDot == 2) {
                     return false;
@@ -33,8 +29,7 @@ public class Solution {
                 if (numOfE > 0) {
                     return false;
                 }
-            }
-            if (isE(c)) {
+            } else if (isE(c)) {
                 numOfE++;
                 if (numOfE == 2) {
                     return false;
@@ -45,8 +40,7 @@ public class Solution {
                 if (numOfDigit == 0) {
                     return false;
                 }
-            }
-            if (isSign(c)) {
+            } else if (isSign(c)) {
                 numOfSign++;
                 if (numOfSign == 3) {
                     return false;
@@ -57,14 +51,12 @@ public class Solution {
                 if (i != 0 && numOfE == 0) {
                     return false;
                 }
+            } else {
+                return false;
             }
         }
         
         return true;
-    }
-    
-    private boolean isValid(char c) {
-        return isDigit(c) || isE(c) || isSign(c) || isDot(c);
     }
     
     private boolean isE(char c) {
