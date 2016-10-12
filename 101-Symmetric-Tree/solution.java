@@ -15,13 +15,13 @@ public class Solution {
         return isSymmetric(root.left, root.right);
     }
     
-    private boolean isSymmetric(TreeNode p, TreeNode q) {
-        if (p == null && q == null) {
+    private boolean isSymmetric(TreeNode l, TreeNode r) {
+        if (l == null && r == null) {
             return true;
         }
-        if (p == null || q == null || p.val != q.val) {
+        if (l == null || r == null || l.val != r.val) {
             return false;
         }
-        return isSymmetric(p.left, q.right) && isSymmetric(q.left, p.right);
+        return isSymmetric(l.left, r.right) && isSymmetric(l.right, r.left);
     }
 }
